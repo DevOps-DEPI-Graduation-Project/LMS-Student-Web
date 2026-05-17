@@ -51,16 +51,16 @@ export class AuthService {
 
     const authFlow$ = accessToken
       ? this.checkTokenValidity().pipe(
-          switchMap((isValid) => {
-            if (isValid) return this.fetchCurrentUser();
-            return this.refreshAccessToken().pipe(
-              switchMap(() => this.fetchCurrentUser())
-            );
-          })
-        )
+        switchMap((isValid) => {
+          if (isValid) return this.fetchCurrentUser();
+          return this.refreshAccessToken().pipe(
+            switchMap(() => this.fetchCurrentUser())
+          );
+        })
+      )
       : this.refreshAccessToken().pipe(
-          switchMap(() => this.fetchCurrentUser())
-        );
+        switchMap(() => this.fetchCurrentUser())
+      );
 
     authFlow$.pipe(
       tap((user) => {
@@ -105,6 +105,7 @@ export class AuthService {
   // ─── Login ────────────────────────────────────────────────────────────────
   login(data: LoginRequest): Observable<Student | null> {
     return this.http.post<LoginResponse>(API_ENDPOINTS.login, data).pipe(
+
       tap((res) => {
         const { tokens, user } = res.data;
 
@@ -112,11 +113,26 @@ export class AuthService {
         this.tokenService.setRefreshToken(tokens.refresh);
         this.tokenService.setSlug(user.slug);
         this.isLoggedIn.set(true);
+
+        const partialStudent: Student = {
+          ...user,
+          is_verified: true,
+          image: null
+        };
+
+        this.currentUser.set(partialStudent);
+        this.authReadySubject.next(partialStudent);
       }),
-      switchMap(() => this.fetchCurrentUser()),
-      tap((user) => {
-        this.authReadySubject.next(user);
-      })
+
+      switchMap(() =>
+        this.fetchCurrentUser().pipe(
+          catchError((err) => {
+            console.warn('fetchCurrentUser failed, using login data instead:', err);
+            return of(this.currentUser());
+          })
+        )
+      )
+
     );
   }
 

@@ -67,6 +67,8 @@
 
   --error: #D32F2F;
   --on-error: #FFFFFF;
+
+  --input-bg: #F3F7F8;
 }
 
 .dark {
@@ -91,6 +93,8 @@
 
   --error: #EF5350;
   --on-error: #FFFFFF;
+
+  --input-bg: #121A1F;
 }
 
 .bg-surface {

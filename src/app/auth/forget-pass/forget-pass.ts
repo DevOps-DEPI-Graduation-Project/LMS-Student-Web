@@ -31,11 +31,7 @@ export class ForgetPass {
   onSubmit() {
 
     if (this.forgotForm.invalid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Invalid email',
-        text: 'Please enter a valid email address'
-      });
+      this.forgotForm.markAllAsTouched();
       return;
     }
 

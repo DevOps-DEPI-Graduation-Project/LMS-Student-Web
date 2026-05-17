@@ -35,12 +35,13 @@
         </p>
       </div>
 
-      <form [formGroup]="forgotForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <form [formGroup]="forgotForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-3">
 
-        <div class="flex items-center gap-3 border border-[var(--outline)] bg-[var(--surface)]
-                  rounded-xl px-4 py-3.5 transition-all duration-200
-                  focus-within:border-[var(--primary)] focus-within:ring-2
-                  focus-within:ring-[var(--primary)] focus-within:ring-opacity-10">
+        <div class="flex items-center gap-3 border rounded-xl px-4 py-3.5 transition-all duration-200 bg-[var(--input-bg)]"
+             [ngClass]="{
+               'border-[var(--error)] focus-within:border-[var(--error)] focus-within:ring-[var(--error)]/10 focus-within:ring-2': forgotForm.get('email')?.invalid && forgotForm.get('email')?.touched,
+               'border-[var(--outline)] focus-within:border-[var(--primary)] focus-within:ring-[var(--primary)]/10 focus-within:ring-2': !(forgotForm.get('email')?.invalid && forgotForm.get('email')?.touched)
+             }">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[var(--text-tertiary)] shrink-0" fill="none"
             viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0
@@ -54,7 +55,7 @@
         </div>
 
         @if (forgotForm.get('email')?.invalid && forgotForm.get('email')?.touched) {
-        <p class="text-xs text-[var(--error)] -mt-2">Valid email is required.</p>
+          <p class="text-xs text-[var(--error)] pl-1 -mt-1 mb-2">Valid email is required.</p>
         }
 
         <button type="submit" [disabled]="isLoading" class="w-full py-3.5 rounded-xl bg-[var(--primary)] text-white font-semibold

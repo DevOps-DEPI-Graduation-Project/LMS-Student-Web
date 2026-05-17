@@ -55,32 +55,26 @@ export class VerifyEmail {
   }
   onDigitInput(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
+    const value = input.value.replace(/\D/g, '').slice(0, 1);
 
-    const value = input.value.replace(/\D/g, '');
     input.value = value;
-
     this.otpForm.get(`digit${index}`)?.setValue(value);
 
     if (value && index < this.otpControls.length - 1) {
-      const inputs = document.querySelectorAll<HTMLInputElement>('input[formcontrolname]');
-      inputs[index + 1]?.focus();
+      const allInputs = input.closest('div')?.querySelectorAll<HTMLInputElement>('input');
+      allInputs?.[index + 1]?.focus();
     }
   }
   onKeyDown(event: KeyboardEvent, index: number) {
-
     if (event.key === 'Backspace') {
-
+      const input = event.target as HTMLInputElement;
       const current = this.otpForm.get(`digit${index}`);
 
       if (!current?.value && index > 0) {
-
-        const inputs = document.querySelectorAll<HTMLInputElement>('input[formcontrolname]');
-        inputs[index - 1]?.focus();
-
+        const allInputs = input.closest('div')?.querySelectorAll<HTMLInputElement>('input');
+        allInputs?.[index - 1]?.focus();
       }
-
     }
-
   }
   onPaste(event: ClipboardEvent) {
 

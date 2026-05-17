@@ -1,4 +1,4 @@
-<article class="group relative flex flex-col rounded-2xl overflow-hidden
+<article class="group relative flex flex-col h-full rounded-2xl overflow-hidden
          bg-[var(--surface)] border border-[var(--outline)]
          transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
   [class.ring-2]="course.is_enrolled" [class.ring-[var(--primary)]]="course.is_enrolled">
@@ -48,7 +48,7 @@
     </div>
 
     <!-- Instructor -->
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 mt-auto">
       <div class="w-7 h-7 rounded-full bg-[var(--background)] border border-[var(--outline)]
                   flex items-center justify-center shrink-0">
         <span class="text-[10px] font-bold text-[var(--primary)]">

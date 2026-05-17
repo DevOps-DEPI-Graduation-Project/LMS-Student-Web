@@ -36,11 +36,7 @@ export class Login {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Invalid form',
-        text: 'Please enter a valid email and password',
-      });
+      this.loginForm.markAllAsTouched();
       return;
     }
 
@@ -78,16 +74,23 @@ export class Login {
           this.router.navigate([redirectUrl]);
         });
       },
-
       error: (err: HttpErrorResponse) => {
         this.isLoading = false;
+
+        // ✅ لو server error → مش مشكلة credentials
+        if (err.status === 500) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Server Error',
+            text: 'Something went wrong on our end. Please try again later.',
+          });
+          return;
+        }
 
         const message = (err.error?.detail || err.error?.message || '').toLowerCase();
 
         if (err.status === 400 && message.includes('not verified')) {
-
           sessionStorage.setItem('verify_email', this.loginForm.value.email);
-
           this.router.navigate(['/auth/verify-email']);
           return;
         }
@@ -98,7 +101,6 @@ export class Login {
           text: err.error?.detail || err.error?.message || 'Invalid email or password',
         });
       },
-
     });
   }
 }

@@ -54,6 +54,7 @@ export class Register {
 
    this.auth.register(payload).subscribe({
       next: () => {
+        sessionStorage.setItem('verify_email', payload.email);
         this.loading.set(false);
         Swal.fire({
           title: 'Account Created!',
