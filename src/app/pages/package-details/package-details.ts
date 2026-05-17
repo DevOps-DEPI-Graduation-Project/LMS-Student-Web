@@ -9,10 +9,11 @@ import { AlertService } from '../../shared/services/alert';
 import { IPackageDetails, IPackageCardData } from '../../user-features/models/course.model';
 import { ImgFallback } from '../../shared/directives/img-fallback';
 import { RouterLink } from '@angular/router';
+import { Skeleton } from '../../components/shared/skeleton/skeleton';
 @Component({
   selector: 'app-package-details',
   standalone: true,
-  imports: [CommonModule, ImgFallback, RouterLink],
+  imports: [CommonModule, ImgFallback, RouterLink, Skeleton],
   templateUrl: './package-details.html',
   styleUrl: './package-details.css',
 })

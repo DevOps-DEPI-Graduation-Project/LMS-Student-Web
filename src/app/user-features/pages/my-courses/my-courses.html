@@ -54,9 +54,7 @@
 
   <!-- ── Loading ── -->
   @if (isLoading) {
-    <div class="flex justify-center items-center py-24">
-      <div class="w-9 h-9 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
-    </div>
+    <app-skeleton type="courses-grid" [count]="4" />
   }
 
   <!-- ── Error ── -->

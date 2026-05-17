@@ -9,13 +9,14 @@ import { AlertService } from '../../shared/services/alert';
 import { User } from '../../user-features/services/user';
 import { ICourseDetailRequest, CourseRatingResponse } from '../../user-features/models/course.model';
 import { ImgFallback } from '../../shared/directives/img-fallback';
+import { Skeleton } from '../../components/shared/skeleton/skeleton';
 
 
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-course-details',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, DatePipe, ImgFallback],
+  imports: [CommonModule, CurrencyPipe, DatePipe, ImgFallback, Skeleton],
   templateUrl: './course-details.html',
   styleUrl: './course-details.css',
 })

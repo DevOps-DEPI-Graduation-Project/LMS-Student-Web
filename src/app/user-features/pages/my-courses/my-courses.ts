@@ -5,10 +5,11 @@ import { EnrolledCourse } from '../../models/course.model';
 import { CourseCard } from '../../shared/components/course-card/course-card';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Skeleton } from '../../../components/shared/skeleton/skeleton';
 
 @Component({
   selector: 'app-my-courses',
-  imports: [CourseCard, CommonModule],
+  imports: [CourseCard, CommonModule, Skeleton],
   templateUrl: './my-courses.html',
   styleUrl: './my-courses.css',
 })

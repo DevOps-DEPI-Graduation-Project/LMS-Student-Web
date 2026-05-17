@@ -2,18 +2,12 @@
 
 
   @if (fetching()) {
-  <div class="bg-[var(--surface)] rounded-2xl border border-[var(--outline)] p-10
-              flex items-center justify-center">
-    <div class="flex flex-col items-center gap-3">
-      <div class="w-8 h-8 border-2 border-[var(--primary)] border-t-transparent
-                  rounded-full animate-spin"></div>
-      <p class="text-sm text-[var(--text-tertiary)]">Loading profile...</p>
-    </div>
-  </div>
+    <app-skeleton type="profile" />
+  }
 
-  } @else if (profile(); as p) {
+  @else if (profile(); as p) {
 
-  <!-- ── Success banner ──────────────────────────────────────────────────── -->
+  <!-- ── Success banner ──────────── -->
   @if (saveSuccess()) {
   <div class="flex items-center gap-2 text-sm text-green-700 bg-green-50
               border border-green-200 rounded-xl px-4 py-2.5">
@@ -25,7 +19,7 @@
   </div>
   }
 
-  <!-- ── Profile card ────────────────────────────────────────────────────── -->
+  <!-- ── Profile card ──────────────── -->
   <div class="bg-[var(--surface)] rounded-2xl shadow-sm border border-[var(--outline)] p-6">
 
     <div class="flex items-center justify-between mb-5">

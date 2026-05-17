@@ -13,11 +13,12 @@ import { Student } from '../../../models/user.models';
 import Swal from 'sweetalert2';
 
 import { ImgFallback } from '../../../shared/directives/img-fallback';
+import { Skeleton } from '../../../components/shared/skeleton/skeleton';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ImgFallback],
+  imports: [ReactiveFormsModule, CommonModule, ImgFallback, Skeleton],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
