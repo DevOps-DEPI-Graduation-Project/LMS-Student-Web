@@ -5,6 +5,7 @@ import { PrivateLayout } from './layouts/private-layout/private-layout';
 import { AuthLayout } from './auth/shared/auth-layout/auth-layout';
 import { authGuard, guestGuard } from './auth/guards/auth-guard';
 import { AuthService } from './auth/services/auth';
+import { filter, take, map } from 'rxjs';
 
 export const routes: Routes = [
   {
@@ -14,12 +15,24 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./pages/home/home').then(m => m.Home),
-        canActivate: [() => {
-          const auth = inject(AuthService);
-          const router = inject(Router);
+      canActivate: [() => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
 
-          return auth.isLoggedIn() ? router.createUrlTree(['/user-dashboard']) : true;
-        }],
+  if (auth.isLoggedIn()) {
+    return router.createUrlTree(['/user-dashboard']);
+  }
+
+
+  return auth.authReady$.pipe(
+    filter(value => value !== undefined),
+    take(1),
+    map(user => {
+      if (user) return router.createUrlTree(['/user-dashboard']);
+      return true;
+    })
+  );
+}],
       },
       {
         path: 'home',
