@@ -59,5 +59,6 @@ allCoursesPaged: (page: number, pageSize: number) =>
   //--videos
 
   videoWorkspace: (courseSlug: string) => `${BASE_URL}api/courses/${courseSlug}/videos/`,
+  videoComplete: (videoSlug: string) => `${BASE_URL}api/video-complete/${videoSlug}/`,
 
 };

@@ -20,6 +20,7 @@ export class TabVideos implements OnInit {
   error = signal(false);
 
   watchProgress = signal<Record<string, number>>({});
+  realDurations = signal<Record<string, number>>({});
   videoErrors = signal<Record<string, string | null>>({});
   constructor(private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
@@ -97,7 +98,8 @@ export class TabVideos implements OnInit {
 
   getProgress(video: Video): number {
     const watched = this.watchProgress()[video.slug] ?? 0;
-    const total = this.toSeconds(video.duration);
+    // Prioritize real duration captured during playback over model duration
+    const total = this.realDurations()[video.slug] || this.toSeconds(video.duration);
     if (!total) return 0;
     return Math.min(Math.round((watched / total) * 100), 100);
   }
@@ -105,6 +107,36 @@ export class TabVideos implements OnInit {
   onTimeUpdate(event: Event, slug: string) {
     const el = event.target as HTMLVideoElement;
     this.watchProgress.update(p => ({ ...p, [slug]: el.currentTime }));
+
+    // Store the actual duration in case metadata was wrong
+    if (el.duration && el.duration > 0) {
+      if (this.realDurations()[slug] !== el.duration) {
+        this.realDurations.update(d => ({ ...d, [slug]: el.duration }));
+      }
+    }
+
+    // Auto-complete when reaching the end
+    const video = this.videos().find(v => v.slug === slug);
+    if (video && !video.is_completed && el.duration > 0 && el.currentTime > el.duration - 1) {
+      this.markComplete(video);
+    }
+  }
+
+  markComplete(video: Video) {
+    if (video.is_completed) return;
+
+    // Send total duration + 10 as requested by user
+    const totalSeconds = this.toSeconds(video.duration) + 10;
+
+    this.workspaceService.markVideoComplete(video.slug, totalSeconds).subscribe({
+      next: () => {
+        // Update local state
+        this.videos.update(vs => vs.map(v =>
+          v.slug === video.slug ? { ...v, is_completed: true } : v
+        ));
+      },
+      error: (err: any) => console.error('Failed to mark video as complete:', err)
+    });
   }
 
   getYoutubeEmbed(url: string | null): SafeResourceUrl {

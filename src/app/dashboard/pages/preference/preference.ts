@@ -17,7 +17,7 @@ export class Preference {
   form: FormGroup;
   saved = signal(false);
 
-  languages = ['English', 'Arabic'];
+  public languages = ['English', 'Arabic'];
 
   constructor(private fb: FormBuilder, private theme: ThemeService) {
     this.form = this.fb.group({
