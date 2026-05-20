@@ -17,11 +17,11 @@ export const API_ENDPOINTS = {
   checkToken: `${BASE_URL}api/auth/check-token/`,
 
   // ── Students ──────────────────────────────────────────
-  students:      `${BASE_URL}api/students/`,
+  students: `${BASE_URL}api/students/`,
   studentBySlug: (slug: string) => `${BASE_URL}api/students/${slug}/`,
 
   // ───course topRated ──────────────────────────────────────────
-  coursesTopRated:(limit:number)=> `${BASE_URL}api/courses/topRated/?limit=${limit}`,
+  coursesTopRated: (limit: number) => `${BASE_URL}api/courses/topRated/?limit=${limit}`,
   // enrollments
   myCourses: `${BASE_URL}api/courses/myEnrollments/`,
   // course details
@@ -31,8 +31,8 @@ export const API_ENDPOINTS = {
   // all courses
   allCourses: `${BASE_URL}api/courses/all/`,
   // ── All Courses with pagination ──
-allCoursesPaged: (page: number, pageSize: number) =>
-  `${BASE_URL}api/courses/all/?page=${page}&page_size=${pageSize}`,
+  allCoursesPaged: (page: number, pageSize: number) =>
+    `${BASE_URL}api/courses/all/?page=${page}&page_size=${pageSize}`,
   // package
   package: `${BASE_URL}api/packages/all/`,
   // ── All packages with pagination ──
@@ -50,7 +50,7 @@ allCoursesPaged: (page: number, pageSize: number) =>
   // ── Quiz ──────────────────────────────────────────
   quiz: (courseSlug: string) => `${BASE_URL}api/courses/${courseSlug}/quizzes/`,
   // ── Quiz Questions ───────────────────────────────────────────
-  quizQuestions:(quiz_slug:string) => `${BASE_URL}api/quizzes/${quiz_slug}/questions/`,
+  quizQuestions: (quiz_slug: string) => `${BASE_URL}api/quizzes/${quiz_slug}/questions/`,
   // ── Submit Quiz Answers ───────────────────────────────────────────
   submitQuizAnswers: (quiz_slug: string) => `${BASE_URL}api/quizzes/${quiz_slug}/submit/`,
 
@@ -59,5 +59,7 @@ allCoursesPaged: (page: number, pageSize: number) =>
   //--videos
 
   videoWorkspace: (courseSlug: string) => `${BASE_URL}api/courses/${courseSlug}/videos/`,
+  videoComplete: (slug: string) => `${BASE_URL}api/video-complete/${slug}/`,
+
 
 };
