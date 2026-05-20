@@ -68,4 +68,7 @@ private loadDashboardCourses() {
   goToMyCourses() {
     this.router.navigate(['/my-courses']);
   }
+   goToExplore() {
+    this.router.navigate(['/explore']);
+  }
 }

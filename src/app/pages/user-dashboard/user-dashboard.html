@@ -58,7 +58,14 @@
           <p class="font-body text-[var(--text-secondary)] opacity-80">
             Our most popular paths for future developers
           </p>
+
         </div>
+         <a
+          (click)="goToExplore()"
+          class="text-[var(--primary)] font-bold hover:underline cursor-pointer font-caption uppercase tracking-wider"
+        >
+          explore more courses →
+        </a>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -71,7 +78,7 @@
           </div>
         } @empty {
           <app-skeleton [type]="'courses-grid'" [count]="3"></app-skeleton>
-         
+
         }
       </div>
     </section>
