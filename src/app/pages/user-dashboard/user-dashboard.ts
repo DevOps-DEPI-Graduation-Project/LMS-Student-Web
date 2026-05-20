@@ -10,11 +10,12 @@ import { Card } from '../../components/shared/card/card';
 import { User } from '../../user-features/services/user';
 
 import { CourseCard } from "../../user-features/shared/components/course-card/course-card";
+import { Skeleton } from "../../components/shared/skeleton/skeleton";
 
 @Component({
   selector: 'app-user-dashboard',
   standalone: true,
-  imports: [Card, CommonModule, CourseCard],
+  imports: [Card, CommonModule, CourseCard, Skeleton],
   templateUrl: './user-dashboard.html',
   styleUrl: './user-dashboard.css',
 })

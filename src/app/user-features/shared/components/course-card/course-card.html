@@ -27,7 +27,7 @@
              text-[11px] font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm"
       [ngClass]="{
         'bg-white/20 text-white border border-white/30':   course.status === 'not_started',
-        'bg-blue-500/90 text-white':                       course.status === 'in_progress',
+        'bg-[var(--primary)] text-white':                       course.status === 'in_progress',
         'bg-emerald-500/90 text-white':                    course.status === 'completed'
       }"
     >
@@ -95,7 +95,7 @@
           class="text-[11px] font-bold"
           [ngClass]="{
             'text-[var(--text-tertiary)]': course.status === 'not_started',
-            'text-blue-500':               course.status === 'in_progress',
+            'text-[var(--primary)]':               course.status === 'in_progress',
             'text-emerald-500':            course.status === 'completed'
           }"
         >{{ course.progress }}%</span>
@@ -108,7 +108,7 @@
           class="h-full rounded-full transition-all duration-700"
           [ngClass]="{
             'bg-[var(--text-tertiary)] opacity-40': course.status === 'not_started',
-            'bg-blue-500':                          course.status === 'in_progress',
+            'bg-[var(--primary)]':                          course.status === 'in_progress',
             'bg-emerald-500':                       course.status === 'completed'
           }"
           [style.width.%]="course.progress"
