@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { CommonModule, NgIf, NgFor } from '@angular/common';
-import { Video } from '../../../../models/courseWorkspace.model';
+import { IVideoCompleteResponse, Video } from '../../../../models/courseWorkspace.model';
 import { CourseWorkspaceService } from '../../../../services/course-workspace'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -105,6 +105,26 @@ export class TabVideos implements OnInit {
   onTimeUpdate(event: Event, slug: string) {
     const el = event.target as HTMLVideoElement;
     this.watchProgress.update(p => ({ ...p, [slug]: el.currentTime }));
+  }
+
+  onVideoEnded(event: Event, video: Video) {
+    if (video.is_completed) return;
+
+    const seconds = this.toSeconds(video.duration) + 10;
+
+    this.workspaceService.completeVideo(video.slug, seconds).subscribe({
+      next: (res: IVideoCompleteResponse) => {
+        this.videos.update(list =>
+          list.map(v => v.slug === video.slug ? { ...v, is_completed: true } : v)
+        );
+        if (this.selectedVideo()?.slug === video.slug) {
+          this.selectedVideo.update(v => v ? { ...v, is_completed: true } : null);
+        }
+      },
+      error: (err: IVideoCompleteResponse) => {
+       console.log(err);
+      }
+    });
   }
 
   getYoutubeEmbed(url: string | null): SafeResourceUrl {

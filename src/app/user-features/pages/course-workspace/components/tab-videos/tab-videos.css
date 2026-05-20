@@ -87,225 +87,176 @@
 }
 
 .video-thumb {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   position: relative;
   background: var(--background);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  &.youtube {
-    background: color-mix(in srgb, #FF0000 12%, transparent);
+  .radial-progress {
+    position: absolute;
+    inset: -3px;
+    width: calc(100% + 6px);
+    height: calc(100% + 6px);
+    transform: rotate(-90deg);
 
-    svg {
-      color: #FF0000;
-      width: 18px;
-      height: 18px;
+    .ring-bg {
+      fill: none;
+      stroke: var(--outline);
+      stroke-width: 2.5;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      transition: stroke-dasharray 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
-  &.upload {
-    background: color-mix(in srgb, var(--primary) 12%, transparent);
-
-    svg {
-      color: var(--primary);
-      width: 16px;
-      height: 16px;
-    }
-  }
-
-  svg {
+  .type-icon {
+    position: relative;
+    z-index: 1;
     width: 18px;
     height: 18px;
+    transition: transform 0.3s ease;
   }
+
+  &.youtube .type-icon { color: #FF0000; }
+  &.upload .type-icon { color: var(--primary); }
 }
 
-.active-dot {
+.video-card:hover .type-icon {
+  transform: scale(1.1);
+}
+
+.completed-check {
   position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 8px;
-  height: 8px;
-  background: var(--primary);
-  border-radius: 50%;
-  border: 2px solid var(--surface);
-}
-
-.video-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.video-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 4px;
-}
-
-.video-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
-.duration {
-  font-size: 11px;
-  color: var(--text-tertiary);
-}
-
-.type-badge {
-  font-size: 10px;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-
-  &.yt {
-    background: color-mix(in srgb, #FF0000 12%, transparent);
-    color: #FF0000;
-  }
-
-  &.up {
-    background: color-mix(in srgb, var(--primary) 12%, transparent);
-    color: var(--primary);
-  }
-}
-
-.progress-track {
-  height: 3px;
-  background: var(--outline);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 3px;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--primary);
-  border-radius: 2px;
-  transition: width 0.3s ease;
-}
-
-.progress-label {
-  font-size: 10px;
-  color: var(--text-tertiary);
-}
-
-.completed-label {
-  font-size: 10px;
-  font-weight: 600;
-  color: #22c55e;
-}
-
-.video-player-area {
-  background: var(--surface);
-  border: 1px solid var(--outline);
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.player-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 20px 24px 16px;
-  border-bottom: 1px solid var(--divider);
-}
-
-.player-order {
-  width: 32px;
-  height: 32px;
-  background: var(--primary);
-  color: var(--on-primary);
-  border-radius: 8px;
+  inset: -3px;
+  background: color-mix(in srgb, #22c55e 15%, transparent);
+  border: 2.5px solid #22c55e;
+  border-radius: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
+  color: #22c55e;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 2;
+  animation: checkPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-.player-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 2px;
-}
-
-.player-duration {
-  font-size: 12px;
-  color: var(--text-tertiary);
-}
-
-.player-wrapper {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
-  position: relative;
-
-  iframe,
-  video {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  &.no-source {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    background: var(--background);
-
-    svg {
-      width: 48px;
-      height: 48px;
-      color: var(--text-tertiary);
-    }
-
-    p {
-      font-size: 14px;
-      color: var(--text-tertiary);
-    }
+  svg {
+    width: 24px;
+    height: 24px;
+    filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
   }
 }
 
-.player-progress-bar {
-  padding: 16px 24px;
+@keyframes checkPop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Linear Progress - Futuristic */
+.creative-progress-area {
+  padding: 24px;
+  background: color-mix(in srgb, var(--primary) 3%, transparent);
   border-top: 1px solid var(--divider);
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 12px;
+
+    .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+  }
 }
 
-.player-progress-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--text-tertiary);
-  margin-bottom: 6px;
-}
-
-.player-progress-track {
-  height: 6px;
+.futuristic-progress {
+  height: 12px;
   background: var(--outline);
-  border-radius: 4px;
+  border-radius: 6px;
+  position: relative;
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  .track-segments {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    gap: 4px;
+    padding: 2px;
+
+    .segment {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+    }
+  }
+
+  .progress-fill-container {
+    position: absolute;
+    inset: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      var(--primary) 0%, 
+      var(--secondary) 100%
+    );
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--primary) 40%, transparent);
+
+    .fill-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.15) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.15) 50%, 
+        rgba(255, 255, 255, 0.15) 75%, 
+        transparent 75%, 
+        transparent
+      );
+      background-size: 20px 20px;
+      animation: movePattern 2s linear infinite;
+    }
+
+    .glow-head {
+      position: absolute;
+      right: -8px;
+      top: -10px;
+      bottom: -10px;
+      width: 16px;
+      background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+      filter: blur(4px);
+    }
+  }
 }
 
-.player-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--secondary)));
-  border-radius: 4px;
-  transition: width 0.5s ease;
+@keyframes movePattern {
+  from { background-position: 0 0; }
+  to { background-position: 40px 0; }
 }
 
 .skeleton-box {
@@ -318,7 +269,9 @@
 .skeleton-line {
   height: 14px;
   border-radius: 6px;
-  @extend .skeleton-box;
+  background: linear-gradient(90deg, var(--outline) 25%, var(--background) 50%, var(--outline) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
 }
 
 .video-card-skeleton {

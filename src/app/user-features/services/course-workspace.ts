@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICourseWorkspaceHeader, IMaterialsResponse, IQuestion, IQuestionsResponse, IQuizCourse, IQuizCourseResponse, IQuizResult, IQuizResultsResponse, ISubmitQuizRequest, ISubmitQuizResponse, VideosResponse } from '../models/courseWorkspace.model';
+import { ICourseWorkspaceHeader, IMaterialsResponse, IQuestion, IQuestionsResponse, IQuizCourse, IQuizCourseResponse, IQuizResult, IQuizResultsResponse, ISubmitQuizRequest, ISubmitQuizResponse, IVideoCompleteResponse, VideosResponse } from '../models/courseWorkspace.model';
 import { Observable } from 'rxjs';
 import { CourseService } from './user';
 import { User } from '../services/user';
@@ -81,6 +81,10 @@ getVideos(courseSlug: string): Observable<VideosResponse> {
   );
 }
 
-
+ completeVideo(videoSlug: string, watchedSeconds: number) {
+  return this.http.post<IVideoCompleteResponse>(API_ENDPOINTS.videoComplete(videoSlug), {
+    watched_seconds: watchedSeconds
+  });
+}
 
 }
