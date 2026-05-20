@@ -47,12 +47,7 @@
           </div>
         } @empty {
           <app-skeleton [type]="'courses-grid'" [count]="3"></app-skeleton>
-          <div class="col-span-full text-center py-20 text-[var(--text-tertiary)]">
-            <p class="text-lg mb-4">You haven't enrolled in any courses yet.</p>
-            <a (click)="this.router.navigate(['/explore'])" class="text-[var(--primary)] font-semibold hover:underline cursor-pointer">
-              Explore courses →
-            </a>
-          </div>
+
         }
       </div>
     </section>
@@ -76,15 +71,7 @@
           </div>
         } @empty {
           <app-skeleton [type]="'courses-grid'" [count]="3"></app-skeleton>
-          <div
-            class="col-span-full text-center py-20 text-[var(--text-tertiary)] bg-[var(--surface)] rounded-[32px] border-2 border-dashed border-[var(--outline)]"
-          >
-            <div class="space-y-3">
-              <i class="fas fa-rocket text-4xl opacity-50 mb-2"></i>
-              <h3 class="text-lg font-semibold text-[var(--text-primary)]">Coming Soon!</h3>
-              <p>Our top-rated courses are currently being curated. Stay tuned!</p>
-            </div>
-          </div>
+         
         }
       </div>
     </section>
