@@ -31,13 +31,19 @@
       @if (student(); as s) {
       <div class="text-right hidden sm:block">
         <p class="text-sm font-semibold text-[var(--text-primary)]">{{ fullName }}</p>
-        <p class="text-xs text-[var(--text-tertiary)]">{{ s.email }}</p>
       </div>
 
       <!-- Avatar -->
+      @if (s.image) {
       <img appImgFallback [src]="s.image" [srcFallback]="''"
         [errorFallback]="'/assets/images/user-default.jpg'" [alt]="fullName"
         class="w-9 h-9 rounded-full object-cover border-2 border-[var(--secondary)]" />
+      } @else {
+      <div class="w-9 h-9 rounded-full bg-[var(--primary)] text-white flex items-center justify-center 
+                  text-xs font-bold border-2 border-[var(--secondary)] shadow-sm select-none">
+        {{ initials }}
+      </div>
+      }
       } @else {
       <!-- Skeleton loading -->
       <div class="h-4 w-28 bg-[var(--outline)] rounded animate-pulse hidden sm:block"></div>
