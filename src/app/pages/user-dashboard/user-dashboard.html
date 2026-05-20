@@ -46,6 +46,7 @@
             <app-user-course-card [course]="course"></app-user-course-card>
           </div>
         } @empty {
+          <app-skeleton [type]="'courses-grid'" [count]="3"></app-skeleton>
           <div class="col-span-full text-center py-20 text-[var(--text-tertiary)]">
             <p class="text-lg mb-4">You haven't enrolled in any courses yet.</p>
             <a (click)="this.router.navigate(['/explore'])" class="text-[var(--primary)] font-semibold hover:underline cursor-pointer">
@@ -74,6 +75,7 @@
             <app-card [course]="course"></app-card>
           </div>
         } @empty {
+          <app-skeleton [type]="'courses-grid'" [count]="3"></app-skeleton>
           <div
             class="col-span-full text-center py-20 text-[var(--text-tertiary)] bg-[var(--surface)] rounded-[32px] border-2 border-dashed border-[var(--outline)]"
           >
