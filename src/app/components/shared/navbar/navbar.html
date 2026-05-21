@@ -95,64 +95,66 @@
               {{ userAvatar() ?? 'U' }}
             </div>
           </button>
+@if (isProfileMenuOpen) {
+  <div
+    class="absolute right-0 top-14 w-48 z-50
+           bg-[var(--surface)]/95 backdrop-blur-md
+           border border-[var(--outline)]/60
+           rounded-2xl shadow-2xl
+           overflow-hidden
+           animate-dropdown"
+  >
+    <!-- Header بسيط -->
+    <div class="px-4 pt-3 pb-2">
+      <p class="text-xs font-semibold text-[var(--text-tertiary)] uppercase tracking-widest">
+        Account
+      </p>
+    </div>
 
-          <!-- Dropdown -->
-          @if (isProfileMenuOpen) {
-            <div
-              class="absolute right-0 top-12 w-44 bg-[var(--surface)] border border-[var(--outline)] rounded-xl shadow-xl py-2 z-50"
-            >
-              <button
-                (click)="goDashboard()"
-                class="flex items-center gap-2 text-left px-4 py-2.5 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--background)] transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M11.25 3c.414 0 .75.336.75.75v1.5a6.75 6.75 0 012.07.86l1.06-1.06a.75.75 0 111.06 1.06l-1.06 1.06c.37.63.65 1.31.82 2.04h1.5a.75.75 0 010 1.5h-1.5a6.75 6.75 0 01-.82 2.04l1.06 1.06a.75.75 0 11-1.06 1.06l-1.06-1.06a6.75 6.75 0 01-2.07.86v1.5a.75.75 0 01-1.5 0v-1.5a6.75 6.75 0 01-2.07-.86l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a6.75 6.75 0 01-.82-2.04H3.75a.75.75 0 010-1.5h1.5c.17-.73.45-1.41.82-2.04L5 6.22a.75.75 0 011.06-1.06l1.06 1.06a6.75 6.75 0 012.07-.86v-1.5c0-.414.336-.75.75-.75z"
-                  />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
+    <!-- Settings -->
+    <button
+      (click)="goDashboard()"
+      class="group flex items-center gap-3 w-full text-left px-4 py-2.5
+             text-[var(--text-secondary)] hover:text-[var(--text-primary)]
+             hover:bg-[var(--background)]/80
+             transition-all duration-200"
+    >
+      <span class="w-8 h-8 rounded-xl bg-[var(--background)] group-hover:bg-[var(--primary)]/10
+                   flex items-center justify-center transition-all duration-200 flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:text-[var(--primary)] transition-colors"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+      </span>
+      <span class="text-sm font-medium">Settings</span>
+    </button>
 
-                Settings
-              </button>
-              <div class="mx-3 my-1 border-t border-[var(--divider)]"></div>
+    <!-- Divider -->
+    <div class="mx-4 my-1 border-t border-[var(--outline)]/50"></div>
 
-              <button
-                (click)="logout()"
-                class="flex items-center gap-2 text-left px-4 py-2.5 rounded-xl text-red-500 hover:bg-red-50 transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M18 12l-3-3m3 3l-3 3m3-3H9"
-                  />
-                </svg>
-
-                Logout
-              </button>
-            </div>
-          }
+    <!-- Logout -->
+    <button
+      (click)="logout()"
+      class="group flex items-center gap-3 w-full text-left px-4 py-2.5 mb-1
+             text-[var(--text-secondary)] hover:text-red-500
+             hover:bg-red-50/80 dark:hover:bg-red-950/30
+             transition-all duration-200"
+    >
+      <span class="w-8 h-8 rounded-xl bg-[var(--background)] group-hover:bg-red-100/80 dark:group-hover:bg-red-950/50
+                   flex items-center justify-center transition-all duration-200 flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-colors"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18 12l-3-3m3 3l-3 3m3-3H9" />
+        </svg>
+      </span>
+      <span class="text-sm font-medium">Logout</span>
+    </button>
+  </div>
+}
         </div>
       }
 
