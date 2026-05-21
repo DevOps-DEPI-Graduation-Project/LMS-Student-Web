@@ -375,3 +375,9 @@ textarea {
   border: 1px solid var(--error);
   color: var(--error);
 }
+.material-card {
+  border-color: var(--outline);
+}
+.material-card:hover {
+  border-color: var(--primary);
+}
