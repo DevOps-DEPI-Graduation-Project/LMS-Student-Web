@@ -3,17 +3,8 @@
   <header class="flex items-center justify-between px-8 py-4
                  bg-[var(--surface)] border-b border-[var(--divider)]">
 
-
     <div class="flex items-center gap-3 cursor-pointer" routerLink="/home">
-    <div
-          class="w-10 h-10 rounded-2xl flex items-center justify-center bg-white border-2 border-[var(--primary)] shadow-md group-hover:scale-105 transition dark:bg-[var(--primary)] dark:text-white dark:border-0"
-        >
-          <img
-            src="/images/app_logo.png"
-            alt="CommitMa3ana Logo"
-            class="w-10 h-10 rounded-2xl object-cover"
-          />
-        </div>
+      <img src="/images/app_logo.png" alt="CommitMa3ana Logo" class="w-10 h-10 rounded-2xl object-cover shadow-md" />
       <span class="text-xl font-semibold text-[var(--primary)]">
         COMMIT<span style="color: var(--secondary);">Ma3ana</span>
       </span>
@@ -32,9 +23,8 @@
 
       <!-- Avatar -->
       @if (s.image) {
-      <img appImgFallback [src]="s.image" [srcFallback]="''"
-        [errorFallback]="'/assets/images/user-default.jpg'" [alt]="fullName"
-        class="w-9 h-9 rounded-full object-cover border-2 border-[var(--secondary)]" />
+      <img appImgFallback [src]="s.image" [srcFallback]="''" [errorFallback]="'/assets/images/user-default.jpg'"
+        [alt]="fullName" class="w-9 h-9 rounded-full object-cover border-2 border-[var(--secondary)]" />
       } @else {
       <div class="w-9 h-9 rounded-full bg-[var(--primary)] text-white flex items-center justify-center 
                   text-xs font-bold border-2 border-[var(--secondary)] shadow-sm select-none">

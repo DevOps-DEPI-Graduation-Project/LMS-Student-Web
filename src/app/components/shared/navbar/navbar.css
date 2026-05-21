@@ -1,14 +1,4 @@
-@keyframes dropdown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.nav-item:hover ~ .indicator-pill {
+  opacity: 1;
 }
 
-.animate-dropdown {
-  animation: dropdown 0.18s ease-out forwards;
-}

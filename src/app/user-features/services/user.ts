@@ -25,6 +25,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class User {
   private readonly baseUrl = environment.baseUrl;
+  enrollments: any;
   constructor(private http: HttpClient) {}
 
   selectedCourse = signal<ICourseDetailRequest | null>(null);
