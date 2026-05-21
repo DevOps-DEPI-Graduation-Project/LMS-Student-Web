@@ -5,18 +5,15 @@
 
 
     <div class="flex items-center gap-3 cursor-pointer" routerLink="/home">
-
-      <div class="w-10 h-10 rounded-2xl flex items-center justify-center
-                  font-bold text-lg bg-[var(--primary)] text-white">
-        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
-          <rect width="40" height="40" rx="12" fill="var(--primary)" />
-          <circle cx="14" cy="14" r="4" fill="white" opacity="0.75" />
-          <path d="M6 28c0-4.418 3.582-7 8-7" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.75" />
-          <circle cx="26" cy="14" r="4" fill="white" />
-          <path d="M34 28c0-4.418-3.582-7-8-7" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-          <path d="M17 22 Q20 19 23 22" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" />
-        </svg>
-      </div>
+    <div
+          class="w-10 h-10 rounded-2xl flex items-center justify-center bg-white border-2 border-[var(--primary)] shadow-md group-hover:scale-105 transition dark:bg-[var(--primary)] dark:text-white dark:border-0"
+        >
+          <img
+            src="/images/app_logo.png"
+            alt="CommitMa3ana Logo"
+            class="w-10 h-10 rounded-2xl object-cover"
+          />
+        </div>
       <span class="text-xl font-semibold text-[var(--primary)]">
         COMMIT<span style="color: var(--secondary);">Ma3ana</span>
       </span>
@@ -31,13 +28,19 @@
       @if (student(); as s) {
       <div class="text-right hidden sm:block">
         <p class="text-sm font-semibold text-[var(--text-primary)]">{{ fullName }}</p>
-        <p class="text-xs text-[var(--text-tertiary)]">{{ s.email }}</p>
       </div>
 
       <!-- Avatar -->
+      @if (s.image) {
       <img appImgFallback [src]="s.image" [srcFallback]="''"
         [errorFallback]="'/assets/images/user-default.jpg'" [alt]="fullName"
         class="w-9 h-9 rounded-full object-cover border-2 border-[var(--secondary)]" />
+      } @else {
+      <div class="w-9 h-9 rounded-full bg-[var(--primary)] text-white flex items-center justify-center 
+                  text-xs font-bold border-2 border-[var(--secondary)] shadow-sm select-none">
+        {{ initials }}
+      </div>
+      }
       } @else {
       <!-- Skeleton loading -->
       <div class="h-4 w-28 bg-[var(--outline)] rounded animate-pulse hidden sm:block"></div>

@@ -146,3 +146,19 @@ export interface VideosResponse {
   message: string;
   data: Video[];
 }
+
+
+export interface IVideoCompleteRequest {
+  watched_seconds: number;
+}
+export interface IVideoCompleteResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: {
+    video_slug: string;
+    watched_seconds: number;
+    is_completed: boolean;
+    completed_at: string;
+  }
+}

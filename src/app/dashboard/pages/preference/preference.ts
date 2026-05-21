@@ -9,8 +9,8 @@ import { ThemeService } from '../../../core/theme';
 @Component({
   selector: 'app-preference',
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './preference.html',
-  styleUrl: './preference.css',
+ template: '',
+  styles: [],
 })
 export class Preference {
 

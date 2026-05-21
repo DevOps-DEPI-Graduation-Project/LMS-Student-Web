@@ -77,7 +77,7 @@ export class Login {
       error: (err: HttpErrorResponse) => {
         this.isLoading = false;
 
-        // ✅ لو server error → مش مشكلة credentials
+       
         if (err.status === 500) {
           Swal.fire({
             icon: 'error',

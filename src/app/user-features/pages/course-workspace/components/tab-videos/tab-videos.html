@@ -47,32 +47,43 @@
     </div>
 
     @for (video of videos(); track video.slug) {
-    <div class="video-card" [class.active]="selectedVideo()?.slug === video.slug" (click)="select(video)">
+    <div class="video-card" [class.active]="selectedVideo()?.slug === video.slug" [class.completed]="video.is_completed"
+      (click)="select(video)">
       <div class="video-thumb" [class.youtube]="getType(video) === 'youtube'"
         [class.upload]="getType(video) === 'upload'">
+        
+        <!-- Radial Progress Ring -->
+        <svg class="radial-progress" viewBox="0 0 36 36">
+          <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          <path class="ring-fill" 
+            [style.stroke-dasharray]="(video.is_completed ? 100 : getProgress(video)) + ', 100'"
+            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+        </svg>
+
         @if (getType(video) === 'youtube') {
-        <svg viewBox="0 0 24 24" fill="currentColor">
+        <svg class="type-icon" viewBox="0 0 24 24" fill="currentColor">
           <path
             d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0C.488 3.45.029 5.804 0 12c.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0C23.512 20.55 23.971 18.196 24 12c-.029-6.185-.484-8.549-4.385-8.816zM9 16V8l8 3.993L9 16z" />
         </svg>
         }
         @if (getType(video) === 'upload') {
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="5 3 19 12 5 21 5 3" />
-        </svg>
-        }
-        <!-- None -->
-        @if (getType(video) === 'none') {
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10" />
-          <line x1="12" y1="8" x2="12" y2="12" />
-          <line x1="12" y1="16" x2="12.01" y2="16" />
         </svg>
         }
 
         <!-- Active indicator dot -->
         @if (selectedVideo()?.slug === video.slug) {
         <span class="active-dot"></span>
+        }
+
+        <!-- Completed Checkmark -->
+        @if (video.is_completed) {
+        <div class="completed-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
         }
       </div>
 
@@ -141,7 +152,7 @@
       </div>
       } @else {
       <video controls [src]="v.video_upload!" (timeupdate)="onTimeUpdate($event, v.slug)"
-        (error)="onVideoError($event, v.slug)"></video>
+        (ended)="onVideoEnded($event, v)" (error)="onVideoError($event, v.slug)"></video>
       }
     </div>
     }
@@ -156,13 +167,25 @@
     }
 
     @if (getProgress(v) > 0 || v.is_completed) {
-    <div class="player-progress-bar">
-      <div class="player-progress-info">
-        <span>Progress</span>
-        <span>{{ v.is_completed ? '100' : getProgress(v) }}%</span>
+    <div class="creative-progress-area">
+      <div class="progress-info">
+        <span class="label">Course Progress</span>
+        <span class="value">{{ v.is_completed ? '100' : getProgress(v) }}%</span>
       </div>
-      <div class="player-progress-track">
-        <div class="player-progress-fill" [style.width.%]="v.is_completed ? 100 : getProgress(v)"></div>
+      
+      <div class="futuristic-progress">
+        <!-- Background Track -->
+        <div class="track-segments">
+          @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+            <div class="segment"></div>
+          }
+        </div>
+        
+        <!-- Fill Level -->
+        <div class="progress-fill-container" [style.width.%]="v.is_completed ? 100 : getProgress(v)">
+          <div class="glow-head"></div>
+          <div class="fill-pattern"></div>
+        </div>
       </div>
     </div>
     }
