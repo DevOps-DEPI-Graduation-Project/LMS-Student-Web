@@ -18,15 +18,15 @@ export interface LogoutResponse {
 }
 
 export interface Student {
-  first_name:  string;   // "Public"
-  last_name:   string;   // "Account"
-  email:       string;   // "abdallahalqiran76@gmail.com"
-  slug:        string;   // "public-3872f200"
-  is_verified: boolean;  // true
+  first_name:  string;   
+  last_name:   string;   
+  email:       string;   
+  slug:        string;   
+  is_verified: boolean;  
   image:       string | null; 
 }
 
 export interface StudentUpdateRequest {
   first_name: string;
   last_name:  string;
-}
+}

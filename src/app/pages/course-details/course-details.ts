@@ -10,9 +10,8 @@ import { User } from '../../user-features/services/user';
 import { ICourseDetailRequest, CourseRatingResponse } from '../../user-features/models/course.model';
 import { ImgFallback } from '../../shared/directives/img-fallback';
 import { Skeleton } from '../../components/shared/skeleton/skeleton';
-
-
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-course-details',
   standalone: true,
@@ -21,19 +20,40 @@ import Swal from 'sweetalert2';
   styleUrl: './course-details.css',
 })
 export class CourseDetails implements OnInit {
-  private route         = inject(ActivatedRoute);
-  private router        = inject(Router);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private courseService = inject(CourseService);
-  private alert         = inject(AlertService);
-  private userService   = inject(User);
-  private destroyRef    = inject(DestroyRef);
+  private alert = inject(AlertService);
+  private userService = inject(User);
+  private destroyRef = inject(DestroyRef);
   auth = inject(AuthService);
 
   courseDetail: ICourseDetailRequest | null = null;
-  isLoading   = true;
+  isLoading = true;
   isEnrolling = signal(false);
-  isEnrolled  = signal(false);
+  isEnrolled = signal(false);
 
+  // ─── Rating Signals ───────────────────────────────────────────────────────
+  selectedRating = signal<number>(0);
+  hoveredRating = signal<number>(0);
+  isSubmittingRating = signal<boolean>(false);
+  ratingSubmitted = signal<boolean>(false);
+
+  // ─── localStorage helpers ─────────────────────────────────────────────────
+  private getRatingKey(slug: string): string {
+    const userSlug = this.auth.currentUser()?.slug ?? 'guest';
+    return `rating_${userSlug}_${slug}`;
+  }
+  private saveRatingLocally(slug: string, rate: number): void {
+    localStorage.setItem(this.getRatingKey(slug), rate.toString());
+  }
+
+  private getSavedRating(slug: string): number {
+    const saved = localStorage.getItem(this.getRatingKey(slug));
+    return saved ? parseInt(saved, 10) : 0;
+  }
+
+  // ─── Load Course ──────────────────────────────────────────────────────────
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('slug');
     if (!slug) return;
@@ -51,11 +71,19 @@ export class CourseDetails implements OnInit {
         this.userService.setSelectedCourse(data);
         this.isEnrolled.set(data.is_enrolled ?? false);
 
+        if (data.is_enrolled && this.auth.isLoggedIn()) {
+          const savedRating = this.getSavedRating(data.slug);
+          if (savedRating > 0) {
+            this.selectedRating.set(savedRating);
+            this.ratingSubmitted.set(true);
+          }
+        }
       },
       error: () => this.isLoading = false,
     });
   }
 
+  // ─── Enroll ───────────────────────────────────────────────────────────────
   goToWorkspace() {
     this.router.navigate(['/CourseWorkspace', this.courseDetail?.slug]);
   }
@@ -85,9 +113,7 @@ export class CourseDetails implements OnInit {
       : this.auth.refreshAccessToken();
 
     token$.pipe(
-      switchMap(() =>
-        this.courseService.enrollInCourse(this.courseDetail!.slug)
-      ),
+      switchMap(() => this.courseService.enrollInCourse(this.courseDetail!.slug)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: () => {
@@ -96,18 +122,17 @@ export class CourseDetails implements OnInit {
         localStorage.removeItem('pendingCourseSlug');
         this.userService.getMyEnrollments();
 
-       Swal.fire({
-  icon: 'success',
-  title: 'Enrolled Successfully!',
-  text: `You are now enrolled in ${this.courseDetail!.title}`,
-  timer: 2500,
-  timerProgressBar: true,
-  showConfirmButton: false,
-});
+        Swal.fire({
+          icon: 'success',
+          title: 'Enrolled Successfully!',
+          text: `You are now enrolled in ${this.courseDetail!.title}`,
+          timer: 2500,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
       },
       error: (err: any) => {
         this.isEnrolling.set(false);
-
         const detail = err?.error?.detail || err?.error?.message || '';
 
         if (err.status === 401) {
@@ -127,13 +152,6 @@ export class CourseDetails implements OnInit {
     });
   }
 
-  exportCourseImage() {
-    if (this.courseDetail?.image) {
-      const filename = `${this.courseDetail.title.replace(/\s+/g, '-').toLowerCase()}-cover.jpg`;
-      this.userService.downloadImage(this.courseDetail.image, filename);
-    }
-  }
-
   handleCourseAction() {
     if (!this.auth.isLoggedIn()) {
       this.alert.requireLoginToEnroll(this.courseDetail?.slug ?? '');
@@ -148,25 +166,17 @@ export class CourseDetails implements OnInit {
     this.onEnroll();
   }
 
-
-
-  // Signals
-  selectedRating = signal<number>(0);
-  hoveredRating = signal<number>(0);
-  isSubmittingRating = signal<boolean>(false);
-  ratingSubmitted = signal<boolean>(false);
-
-  onHoverStar(star: number) {
-    this.hoveredRating.set(star);
+  exportCourseImage() {
+    if (this.courseDetail?.image) {
+      const filename = `${this.courseDetail.title.replace(/\s+/g, '-').toLowerCase()}-cover.jpg`;
+      this.userService.downloadImage(this.courseDetail.image, filename);
+    }
   }
 
-  onLeaveStar() {
-    this.hoveredRating.set(0);
-  }
-
-  onSelectStar(star: number) {
-    this.selectedRating.set(star);
-  }
+  // ─── Rating ───────────────────────────────────────────────────────────────
+  onHoverStar(star: number) { this.hoveredRating.set(star); }
+  onLeaveStar() { this.hoveredRating.set(0); }
+  onSelectStar(star: number) { this.selectedRating.set(star); }
 
   getRatingLabel(rating: number): string {
     const labels: Record<number, string> = {
@@ -178,6 +188,7 @@ export class CourseDetails implements OnInit {
     };
     return labels[rating] ?? 'Select a star to leave your rating';
   }
+
   submitRating() {
     if (!this.selectedRating() || this.isSubmittingRating() || !this.courseDetail) return;
 
@@ -186,9 +197,12 @@ export class CourseDetails implements OnInit {
     this.userService.rateCourse(this.courseDetail.slug, this.selectedRating()).subscribe({
       next: (res) => {
         if (res.success) {
+          // ✅ احفظ في localStorage
+          this.saveRatingLocally(this.courseDetail!.slug, res.data.rate);
+
           this.ratingSubmitted.set(true);
           this.selectedRating.set(res.data.rate);
-          console.log(this.courseDetail?.slug);
+
           Swal.fire({
             icon: 'success',
             title: 'Rating Submitted!',
@@ -202,7 +216,6 @@ export class CourseDetails implements OnInit {
       },
       error: () => {
         this.isSubmittingRating.set(false);
-
         Swal.fire({
           icon: 'error',
           title: 'Oops!',
