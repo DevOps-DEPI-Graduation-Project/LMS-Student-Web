@@ -59,7 +59,6 @@ export const API_ENDPOINTS = {
   //--videos
 
   videoWorkspace: (courseSlug: string) => `${BASE_URL}api/courses/${courseSlug}/videos/`,
-  videoComplete: (slug: string) => `${BASE_URL}api/video-complete/${slug}/`,
-
+  videoComplete: (videoSlug: string) => `${BASE_URL}api/video-complete/${videoSlug}/`,
 
 };

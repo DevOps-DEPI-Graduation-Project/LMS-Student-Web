@@ -89,9 +89,6 @@
 
       <div class="video-info">
         <p class="video-title">{{ video.title }}</p>
-        <div class="video-meta">
-          <span class="duration">{{ formatDuration(video.duration) }}</span>
-        </div>
 
         @if (getProgress(video) > 0 || video.is_completed) {
         <div class="progress-track">
@@ -119,7 +116,6 @@
       <div class="player-order">{{ v.order }}</div>
       <div>
         <h2 class="player-title">{{ v.title }}</h2>
-        <span class="player-duration">{{ formatDuration(v.duration) }}</span>
       </div>
     </div>
 
