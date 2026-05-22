@@ -1,34 +1,36 @@
 import { Component, inject, OnInit, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Card } from '../../../../components/shared/card/card';
-import { CourseService } from '../../../../shared/services/course';
-import { ICourseCardData } from '../../../../components/shared/interfaces/course.model';
-import { ImgFallback } from '../../../../shared/directives/img-fallback'; 
+import { CourseService } from '../../../../user-features/services/user';
+import { ICourseCardData, IPackageCardData } from '../../../../user-features/models/course.model';
+import { ImgFallback } from '../../../../shared/directives/img-fallback';
+import { Skeleton } from "../../../../components/shared/skeleton/skeleton";
 
 @Component({
   selector: 'app-course-section',
   standalone: true,
-  imports: [Card, RouterLink, CommonModule,ImgFallback ], 
+  imports: [Card, RouterLink, CommonModule, ImgFallback, Skeleton],
   templateUrl: './course-section.html',
   styleUrl: './course-section.css',
 })
 export class CourseSection implements OnInit {
   private courseService = inject(CourseService);
-  private destroyRef    = inject(DestroyRef);
-  
+  private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
 
   // ── Packages ──
-  learningTracks:        ICourseCardData[] = [];
-  isLoadingMoreTracks    = false;
-  private tracksPage     = 1;
+  learningTracks: IPackageCardData[] = [];
+  isLoadingMoreTracks = false;
+  private tracksPage = 1;
   private tracksPageSize = 4;
-  tracksTotalPages       = 1;
+  tracksTotalPages = 1;
 
-  get hasMoreTracks(): boolean {
-    return this.tracksPage <= this.tracksTotalPages;
-  }
+ get hasMoreTracks(): boolean {
+  return this.tracksPage < this.tracksTotalPages;
+}
 
   // ── Courses ──
   manyCourses:            ICourseCardData[] = [];
@@ -37,9 +39,10 @@ export class CourseSection implements OnInit {
   private coursesPageSize = 8;
   coursesTotalPages       = 1;
 
-  get hasMoreCourses(): boolean {
-    return this.coursesPage <= this.coursesTotalPages;
-  }
+get hasMoreCourses(): boolean {
+  return this.coursesPage < this.coursesTotalPages;
+}
+
 
   ngOnInit() {
     this.loadTracks();
@@ -80,6 +83,9 @@ export class CourseSection implements OnInit {
       error: () => this.isLoadingMoreCourses = false,
     });
   }
+  onCourseClick(slug: string) {
+  this.router.navigate(['/course', slug]);
+}
 
   loadMoreCourses() {
     if (!this.hasMoreCourses || this.isLoadingMoreCourses) return;

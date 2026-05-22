@@ -9,15 +9,15 @@ import { ThemeService } from '../../../core/theme';
 @Component({
   selector: 'app-preference',
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './preference.html',
-  styleUrl: './preference.css',
+ template: '',
+  styles: [],
 })
 export class Preference {
 
   form: FormGroup;
   saved = signal(false);
 
-  languages = ['English', 'Arabic'];
+  public languages = ['English', 'Arabic'];
 
   constructor(private fb: FormBuilder, private theme: ThemeService) {
     this.form = this.fb.group({

@@ -1,12 +1,21 @@
-name: Jira Deployment Sync
+name: Deploy to GitHub Pages and AWS S3
+
 on:
   push:
-    branches: ["*"]
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production 
+    environment: 
+      name: production
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -15,3 +24,43 @@ jobs:
         run: |
           echo "Processing deployment for Jira issue keys found in commits/branches."
           echo "Successfully synced with Jira!"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # --- LOGIC 1: GITHUB PAGES ---
+      - name: Build for GitHub Pages
+        run: npx ng build --configuration production --base-href /LMS-Student-Web/
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Create 404.html (for Angular Routing)
+        run: cp ./dist/lms-student-web/browser/index.html ./dist/lms-student-web/browser/404.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist/lms-student-web/browser'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Build for AWS S3 (Root Path)
+        run: npx ng build --configuration production --base-href /
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy to S3
+        run: aws s3 sync dist/lms-student-web/browser s3://commit-ma3ana --delete

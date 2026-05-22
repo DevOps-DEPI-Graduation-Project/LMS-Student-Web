@@ -8,6 +8,7 @@ import { WorkspaceHeader } from './components/workspace-header/workspace-header'
 import { WorkspaceTabs } from './components/workspace-tabs/workspace-tabs';
 import { CourseWorkspaceService } from '../../services/course-workspace';
 import { ICourseWorkspaceHeader } from '../../models/courseWorkspace.model';
+import { TabVideos } from "./components/tab-videos/tab-videos";
 
 @Component({
   selector: 'app-course-workspace',

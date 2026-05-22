@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -68,6 +67,8 @@
 
   --error: #D32F2F;
   --on-error: #FFFFFF;
+
+  --input-bg: #F3F7F8;
 }
 
 .dark {
@@ -92,6 +93,8 @@
 
   --error: #EF5350;
   --on-error: #FFFFFF;
+
+  --input-bg: #121A1F;
 }
 
 .bg-surface {
@@ -313,4 +316,68 @@ textarea {
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
+}
+
+.quiz-card {
+  @apply bg-surface border border-[var(--outline)] rounded-2xl p-5 flex items-center justify-between shadow-sm;
+}
+
+.quiz-title {
+  @apply font-semibold text-[var(--text-primary)];
+}
+
+.quiz-label {
+  @apply text-xs text-[var(--text-tertiary)] mt-1;
+}
+
+.quiz-muted {
+  @apply text-[var(--text-secondary)] mt-1;
+}
+
+.quiz-attempts {
+  @apply text-xs text-[var(--text-tertiary)] mt-1;
+}
+
+.quiz-score {
+  @apply font-semibold mt-1;
+}
+
+.quiz-score.success {
+  color: var(--primary);
+}
+
+.quiz-score.error {
+  color: var(--error);
+}
+
+.btn-primary {
+  @apply px-4 py-2 rounded-lg text-sm text-white;
+  background-color: var(--primary);
+}
+
+.btn-outline {
+  @apply px-4 py-2 rounded-lg text-sm;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-disabled {
+  @apply px-4 py-2 rounded-lg text-sm;
+  border: 1px solid var(--outline);
+  color: var(--text-tertiary);
+}
+
+.empty-state {
+  @apply text-center py-16 text-[var(--text-tertiary)];
+}
+.btn-error {
+  @apply px-4 py-2 rounded-lg text-sm;
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+.material-card {
+  border-color: var(--outline);
+}
+.material-card:hover {
+  border-color: var(--primary);
 }

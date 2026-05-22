@@ -1,6 +1,5 @@
 <section class="pt-20 pb-28 md:pt-24 md:pb-32 px-6 md:px-16 bg-[var(--surface)]">
   <div class="container mx-auto">
-
     <div class="flex justify-between items-end mb-10">
       <div>
         <h2 class="text-display text-[var(--text-primary)] mb-4">Top Rated</h2>
@@ -9,39 +8,29 @@
         </p>
       </div>
 
-      <a class="text-[var(--primary)] font-bold border-b-2 border-[var(--primary)]
-                hover:opacity-80 transition cursor-pointer" (click)="onViewAllCourses()">
+      <a
+        class="text-[var(--primary)] font-bold border-b-2 border-[var(--primary)] hover:opacity-80 transition cursor-pointer"
+        (click)="onViewAllCourses()"
+      >
         Go to Explore →
       </a>
     </div>
 
     <!-- Grid -->
     @if (isLoading()) {
-    <app-skeleton type="courses-grid" [count]="4" />
+      <app-skeleton type="courses-grid" [count]="4" />
     } @else {
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      @for (course of courses; track course.slug) {
-      <div (click)="onCourseClick(course.slug)" class="cursor-pointer h-full">
-        <app-card [courseData]="course"></app-card>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        @for (course of courses; track course.slug) {
+          <div (click)="onCourseClick(course.slug)" class="cursor-pointer h-full">
+            <app-card [course]="course"></app-card>
+          </div>
+        } @empty {
+          <div class="col-span-full text-center py-10 text-[var(--text-secondary)]">
+            No courses found at the moment.
+          </div>
+        }
       </div>
-      } @empty {
-      <div class="col-span-full text-center py-10 text-[var(--text-secondary)]">
-        No courses found at the moment.
-      </div>
-      }
-    </div>
     }
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      @for (course of courses; track course.slug) {
-      <div (click)="onCourseClick(course.slug)" class="cursor-pointer h-full">
-        <app-card [courseData]="course"></app-card>
-      </div>
-      } @empty {
-      <div class="col-span-full text-center py-10 text-[var(--text-secondary)]">
-        No courses found at the moment.
-      </div>
-      }
-    </div>
-
   </div>
 </section>

@@ -11,7 +11,7 @@ export interface RegisterResponse {
 
 }
 
-// ── Verify Email ---->OTP after register─────────
+
 export interface VerifyEmailRequest {
   email: string;
   otp: string;
@@ -42,7 +42,8 @@ export interface LoginResponse {
     tokens: {
       access: string;
       refresh: string;
-    };
+    }
+
     user: {
       first_name: string;
       last_name: string;
@@ -81,3 +82,15 @@ export interface TokenRefreshResponse {
   refresh: string;
   access: string;
 }
+export interface CheckTokenResponse {
+  "success": boolean,
+  "status": number,
+  "message": "string",
+  "data": {
+    "valid": boolean,
+    "is_active": boolean,
+    "role": string,
+    "is_verified": boolean
+  }
+}
+

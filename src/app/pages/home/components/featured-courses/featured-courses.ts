@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { catchError, of } from 'rxjs';
 import { Card } from '../../../../components/shared/card/card';
-import { CourseService } from '../../../../shared/services/course';
-import { ICourseCardData } from '../../../../components/shared/interfaces/course.model';
+import { CourseService } from '../../../../user-features/services/user';
+import { ICourseCardData } from '../../../../user-features/models/course.model';
 import { Skeleton } from '../../../../components/shared/skeleton/skeleton';
 
 @Component({
@@ -26,7 +26,7 @@ export class FeaturedCourses implements OnInit {
   isLoading = signal(true);
 
   ngOnInit() {
-    this.courseService.getTopRatedCourses(4).pipe(
+    this.courseService.getTopRatedCourses(8).pipe(
       catchError(() => of([])),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({

@@ -1,4 +1,4 @@
-import { Component, isDevMode, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./components/shared/navbar/navbar";
 import { ThemeService } from './core/theme';
@@ -16,12 +16,5 @@ export class App implements OnInit {
 
   ngOnInit(): void {
     this.theme.initTheme();
-
-    if (isDevMode()) {
-      localStorage.removeItem('refresh_token');
-      localStorage.removeItem('user_slug');
-      this.auth.isLoggedIn.set(false);
-      this.auth.currentUser.set(null);
-    }
   }
 }

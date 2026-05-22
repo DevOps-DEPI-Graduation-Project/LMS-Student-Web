@@ -7,15 +7,19 @@ import {
   ICourseCardData,
   ICourseDetailRequest,
   ICourseDetailResponse,
+  IPackageCardData,
   IPackagesResponse,
   IEnrollResponse,
   IMyEnrollmentsResponse,
   IPackageDetails,
   IPackageDetailsResponse,
-} from '../../components/shared/interfaces/course.model';
+} from '../../user-features/models/course.model';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
+  getMyEnrollments() {
+    throw new Error('Method not implemented.');
+  }
   private http = inject(HttpClient);
 
 
@@ -174,19 +178,21 @@ getAllCoursesPaged(page: number, pageSize: number): Observable<{ courses: ICours
     );
 }
 // ───── Packages with Pagination ─────
-getPackagesPaged(page: number, pageSize: number): Observable<{ packages: ICourseCardData[], totalPages: number }> {
+getPackagesPaged(page: number, pageSize: number): Observable<{ packages: IPackageCardData[], totalPages: number }> {
   return this.http.get<IPackagesResponse>(API_ENDPOINTS.packagePaged(page, pageSize)).pipe(
     map(res => ({
       packages:   (res.data?.packages || []).map(pkg => ({
-        slug:             pkg.slug,
-        title:            pkg.title,
-        description:      pkg.description,
-        image:            pkg.image || null,
-        avg_rating:       pkg.avg_rating || 0,
-        students_count:   pkg.courses_count,
-        instructor_name:  pkg.instructor_name,
-        price:            pkg.price,
-      } as ICourseCardData)),
+        slug:            pkg.slug,
+        title:           pkg.title,
+        description:     pkg.description,
+        image:           pkg.image || null,
+        avg_rating:      pkg.avg_rating || 0,
+        courses_count:   pkg.courses_count,
+        instructor_name: pkg.instructor_name,
+        price:           pkg.price,
+        categories:      pkg.categories || [],
+        course_slugs:    pkg.course_slugs || [],
+      } as IPackageCardData)),
       totalPages: res.data?.total_pages || 1,
     }))
   );

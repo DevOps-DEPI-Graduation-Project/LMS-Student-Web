@@ -1,0 +1,159 @@
+@if (isLoading()) {
+  <div class="flex justify-center items-center min-h-[400px]">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--primary)]"></div>
+  </div>
+}
+
+@if (!isLoading()) {
+  <div class="p-6 md:p-8 max-w-6xl mx-auto">
+
+
+    <div class="flex items-start justify-between mb-6">
+      <div>
+        <h1 class="font-title text-[var(--text-primary)]">{{ courseName() }}</h1>
+        <p class="text-[var(--text-secondary)] mt-1">
+          Track your progress and complete your certification.
+        </p>
+      </div>
+
+      <div class="text-sm text-[var(--text-tertiary)]">
+        Current Module:
+        <span class="ml-2 px-3 py-1 rounded-full bg-[var(--primary)] text-white text-xs">
+          Exams
+        </span>
+      </div>
+    </div>
+
+
+    <div class="bg-[var(--primary)] text-white rounded-2xl p-6 flex items-center justify-between shadow-md mb-6">
+  <div>
+    <p class="text-sm opacity-80">Average Score</p>
+    <h2 class="text-3xl font-bold mt-1">{{ statistics()?.overall_best_score ?? '0%' }}</h2>
+  </div>
+  <div class="bg-white/10 px-4 py-2 rounded-xl text-sm">
+    passed Exams:
+  <span class="font-bold ml-1">{{ (statistics()?.completed_quizzes ?? '0 / 0').split('/')[0].trim() }}</span>
+  </div>
+</div>
+
+
+    <div class="flex gap-3 mb-6">
+      <button (click)="setTab('all')"
+        [class]="activeTab() === 'all'
+          ? 'px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm'
+          : 'px-4 py-2 rounded-full border border-[var(--outline)] text-[var(--text-secondary)] text-sm'">
+        All Exams
+      </button>
+
+      <button (click)="setTab('completed')"
+        [class]="activeTab() === 'completed'
+          ? 'px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm'
+          : 'px-4 py-2 rounded-full border border-[var(--outline)] text-[var(--text-secondary)] text-sm'">
+        Completed
+      </button>
+
+      <button (click)="setTab('not_started')"
+        [class]="activeTab() === 'not_started'
+          ? 'px-4 py-2 rounded-full bg-[var(--primary)] text-white text-sm'
+          : 'px-4 py-2 rounded-full border border-[var(--outline)] text-[var(--text-secondary)] text-sm'">
+        Pending
+      </button>
+    </div>
+
+
+    <div class="grid md:grid-cols-2 gap-4">
+
+      @for (quiz of filteredQuizzes(); track quiz.slug) {
+
+        <div class="quiz-card">
+
+          <div>
+            <h3 class="quiz-title">{{ quiz.quiz_name }}</h3>
+
+            @if (quiz.quiz_status === 'completed' || quiz.quiz_status === 'passed') {
+              <p class="quiz-label">Best Score</p>
+              <p class="quiz-score success">
+                {{ quiz.best_score }} / {{ quiz.total_mark }}
+              </p>
+            }
+
+            @else if (quiz.quiz_status === 'failed' || quiz.quiz_status === 'can_retry') {
+              <p class="quiz-label">Last Score</p>
+              <p class="quiz-score error">
+                {{ quiz.best_score }} / {{ quiz.total_mark }}
+              </p>
+            }
+
+            @else {
+              <p class="quiz-label">Status</p>
+              <p class="quiz-muted">Not Started</p>
+            }
+
+            <p class="quiz-attempts">
+              Attempts: {{ quiz.attempts_used }} / {{ quiz.max_attempts }}
+            </p>
+          </div>
+
+          <div>
+
+            @if (quiz.quiz_status === 'not_started') {
+              <button (click)="goToQuiz(quiz)" class="btn-primary">
+                Start →
+              </button>
+            }
+
+            @else if (quiz.quiz_status === 'can_retry') {
+              <button (click)="goToQuiz(quiz)" class="btn-primary">
+                Retry Now
+              </button>
+            }
+
+            @else if ((quiz.quiz_status === 'completed' || quiz.quiz_status === 'passed') && quiz.attempts_used < quiz.max_attempts) {
+              <button (click)="goToQuiz(quiz)" class="btn-outline">
+                Retake
+              </button>
+            }
+
+            @else {
+              <button
+                [ngClass]="{
+                  'btn-disabled': quiz.quiz_status !== 'failed',
+                  'btn-error': quiz.quiz_status === 'failed'
+                }">
+                Attempt Limit Reached
+              </button>
+            }
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    @if (filteredQuizzes().length === 0) {
+      <div class="col-span-2 empty-state">
+        <p>No quizzes found</p>
+      </div>
+    }
+
+    <!-- Loading More -->
+   @if (isLoadingMore()) {
+  <div class="flex justify-center py-6">
+    <div class="animate-pulse text-sm text-[var(--text-tertiary)]">
+      Loading more quizzes...
+    </div>
+  </div>
+}
+
+    <!-- End -->
+    @if (!hasMore() && quizzes().length > 0) {
+      <div class="text-center py-4 text-[var(--text-tertiary)] text-sm">
+        All quizzes loaded
+      </div>
+    }
+
+  </div>
+}

@@ -1,0 +1,4 @@
+.nav-item:hover ~ .indicator-pill {
+  opacity: 1;
+}
+

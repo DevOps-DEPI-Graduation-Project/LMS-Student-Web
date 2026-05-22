@@ -15,16 +15,18 @@
       routerLinkActive="!bg-[var(--tab-active-bg)] !shadow-sm !font-semibold !text-[var(--text-primary)]"
       [routerLinkActiveOptions]="{exact: true}" class="flex-1 py-2.5 rounded-[10px] text-sm font-medium text-[var(--text-secondary)]
            hover:opacity-70 transition-all duration-200 cursor-pointer bg-transparent border-none">
-      Register
+      Sign Up
     </button>
   </div>
   <!-- Form -->
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
     <!-- First Name -->
-    <div class="flex items-center gap-3 border border-[var(--outline)] bg-[var(--input-bg)]
-                rounded-xl px-4 py-3.5 mb-4 transition-all duration-200
-                focus-within:border-[var(--primary)] focus-within:ring-2 focus-within:ring-[var(--primary)]/10">
+    <div class="flex items-center gap-3 border rounded-xl px-4 py-3.5 transition-all duration-200 bg-[var(--input-bg)]"
+         [ngClass]="{
+           'mb-1 border-[var(--error)] focus-within:border-[var(--error)] focus-within:ring-[var(--error)]/10 focus-within:ring-2': registerForm.get('first_name')?.invalid && registerForm.get('first_name')?.touched,
+           'mb-4 border-[var(--outline)] focus-within:border-[var(--primary)] focus-within:ring-[var(--primary)]/10 focus-within:ring-2': !(registerForm.get('first_name')?.invalid && registerForm.get('first_name')?.touched)
+         }">
       <!-- User icon -->
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -35,11 +37,20 @@
       <input type="text" placeholder="First Name" formControlName="first_name" class="flex-1 border-none outline-none text-sm text-[var(--text-primary)]
                placeholder:text-[var(--text-tertiary)] bg-transparent">
     </div>
+    @if (registerForm.get('first_name')?.invalid && registerForm.get('first_name')?.touched) {
+      <p class="text-xs text-[var(--error)] mb-3 pl-1">
+        @if (registerForm.get('first_name')?.hasError('required')) {
+          First name is required.
+        }
+      </p>
+    }
 
     <!-- Last Name -->
-    <div class="flex items-center gap-3 border border-[var(--outline)] bg-[var(--input-bg)]
-                rounded-xl px-4 py-3.5 mb-4 transition-all duration-200
-                focus-within:border-[var(--primary)] focus-within:ring-2 focus-within:ring-[var(--primary)]/10">
+    <div class="flex items-center gap-3 border rounded-xl px-4 py-3.5 transition-all duration-200 bg-[var(--input-bg)]"
+         [ngClass]="{
+           'mb-1 border-[var(--error)] focus-within:border-[var(--error)] focus-within:ring-[var(--error)]/10 focus-within:ring-2': registerForm.get('last_name')?.invalid && registerForm.get('last_name')?.touched,
+           'mb-4 border-[var(--outline)] focus-within:border-[var(--primary)] focus-within:ring-[var(--primary)]/10 focus-within:ring-2': !(registerForm.get('last_name')?.invalid && registerForm.get('last_name')?.touched)
+         }">
       <!-- User icon -->
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -50,11 +61,20 @@
       <input type="text" placeholder="Last Name" formControlName="last_name" class="flex-1 border-none outline-none text-sm text-[var(--text-primary)]
                placeholder:text-[var(--text-tertiary)] bg-transparent">
     </div>
+    @if (registerForm.get('last_name')?.invalid && registerForm.get('last_name')?.touched) {
+      <p class="text-xs text-[var(--error)] mb-3 pl-1">
+        @if (registerForm.get('last_name')?.hasError('required')) {
+          Last name is required.
+        }
+      </p>
+    }
 
     <!-- Email -->
-    <div class="flex items-center gap-3 border border-[var(--outline)] bg-[var(--input-bg)]
-                rounded-xl px-4 py-3.5 mb-4 transition-all duration-200
-                focus-within:border-[var(--primary)] focus-within:ring-2 focus-within:ring-[var(--primary)]/10">
+    <div class="flex items-center gap-3 border rounded-xl px-4 py-3.5 transition-all duration-200 bg-[var(--input-bg)]"
+         [ngClass]="{
+           'mb-1 border-[var(--error)] focus-within:border-[var(--error)] focus-within:ring-[var(--error)]/10 focus-within:ring-2': registerForm.get('email')?.invalid && registerForm.get('email')?.touched,
+           'mb-4 border-[var(--outline)] focus-within:border-[var(--primary)] focus-within:ring-[var(--primary)]/10 focus-within:ring-2': !(registerForm.get('email')?.invalid && registerForm.get('email')?.touched)
+         }">
       <!-- Envelope icon -->
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -65,11 +85,22 @@
       <input type="email" placeholder="Email" formControlName="email" class="flex-1 border-none outline-none text-sm text-[var(--text-primary)]
                placeholder:text-[var(--text-tertiary)] bg-transparent">
     </div>
+    @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+      <p class="text-xs text-[var(--error)] mb-3 pl-1">
+        @if (registerForm.get('email')?.hasError('required')) {
+          Email is required.
+        } @else if (registerForm.get('email')?.hasError('email')) {
+          Please enter a valid email address.
+        }
+      </p>
+    }
 
     <!-- Password -->
-    <div class="flex items-center gap-3 border border-[var(--outline)] bg-[var(--input-bg)]
-                rounded-xl px-4 py-3.5 mb-4 transition-all duration-200
-                focus-within:border-[var(--primary)] focus-within:ring-2 focus-within:ring-[var(--primary)]/10">
+    <div class="flex items-center gap-3 border rounded-xl px-4 py-3.5 transition-all duration-200 bg-[var(--input-bg)]"
+         [ngClass]="{
+           'mb-1 border-[var(--error)] focus-within:border-[var(--error)] focus-within:ring-[var(--error)]/10 focus-within:ring-2': registerForm.get('password')?.invalid && registerForm.get('password')?.touched,
+           'mb-4 border-[var(--outline)] focus-within:border-[var(--primary)] focus-within:ring-[var(--primary)]/10 focus-within:ring-2': !(registerForm.get('password')?.invalid && registerForm.get('password')?.touched)
+         }">
       <!-- Lock icon -->
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -96,11 +127,22 @@
         <line x1="1" y1="1" x2="23" y2="23" />
       </svg>
     </div>
+    @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+      <p class="text-xs text-[var(--error)] mb-3 pl-1">
+        @if (registerForm.get('password')?.hasError('required')) {
+          Password is required.
+        } @else if (registerForm.get('password')?.hasError('minlength')) {
+          Password must be at least 8 characters long.
+        }
+      </p>
+    }
 
     <!-- Confirm Password -->
-    <div class="flex items-center gap-3 border border-[var(--outline)] bg-[var(--input-bg)]
-                rounded-xl px-4 py-3.5 mb-4 transition-all duration-200
-                focus-within:border-[var(--primary)] focus-within:ring-2 focus-within:ring-[var(--primary)]/10">
+    <div class="flex items-center gap-3 border rounded-xl px-4 py-3.5 transition-all duration-200 bg-[var(--input-bg)]"
+         [ngClass]="{
+           'mb-1 border-[var(--error)] focus-within:border-[var(--error)] focus-within:ring-[var(--error)]/10 focus-within:ring-2': (registerForm.get('confirmPassword')?.invalid || registerForm.hasError('mismatch')) && registerForm.get('confirmPassword')?.touched,
+           'mb-4 border-[var(--outline)] focus-within:border-[var(--primary)] focus-within:ring-[var(--primary)]/10 focus-within:ring-2': !((registerForm.get('confirmPassword')?.invalid || registerForm.hasError('mismatch')) && registerForm.get('confirmPassword')?.touched)
+         }">
       <!-- Lock icon -->
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -128,6 +170,15 @@
         <line x1="1" y1="1" x2="23" y2="23" />
       </svg>
     </div>
+    @if ((registerForm.get('confirmPassword')?.invalid || registerForm.hasError('mismatch')) && registerForm.get('confirmPassword')?.touched) {
+      <p class="text-xs text-[var(--error)] mb-3 pl-1">
+        @if (registerForm.get('confirmPassword')?.hasError('required')) {
+          Confirm password is required.
+        } @else if (registerForm.hasError('mismatch')) {
+          Passwords do not match.
+        }
+      </p>
+    }
 
     <!-- Submit -->
     <button type="submit" class="w-full py-3.5 mt-2 rounded-xl bg-[var(--primary)] text-white font-semibold text-sm

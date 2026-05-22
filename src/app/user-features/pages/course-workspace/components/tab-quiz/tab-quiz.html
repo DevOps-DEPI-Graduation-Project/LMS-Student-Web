@@ -1,1 +1,20 @@
-<p>tab-quiz works!</p>
+@if (currentStep() === 'intro') {
+  <app-quiz-intro (startQuiz)="handleStartQuiz($event)"></app-quiz-intro>
+}
+
+@if (currentStep() === 'question') {
+  <app-quiz-questions
+    [quizSlug]="selectedQuizSlug()"
+    (back)="handleBackToQuizList()"
+    (submitted)="handleQuizSubmitted($event)">
+  </app-quiz-questions>
+}
+
+@if (currentStep() === 'result') {
+  <app-quiz-result
+    [result]="quizResult()"
+    [quizName]="selectedQuizName()"
+    (retry)="handleRetake()"
+    (backToList)="handleBackToQuizList()">
+  </app-quiz-result>
+}

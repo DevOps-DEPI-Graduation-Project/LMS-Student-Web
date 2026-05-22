@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CourseWorkspace } from './course-workspace';
+import { CourseWorkspaceService } from './course-workspace';
 
 describe('CourseWorkspace', () => {
-  let service: CourseWorkspace;
+  let service: CourseWorkspaceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CourseWorkspace);
+    service = TestBed.inject(CourseWorkspaceService);
   });
 
   it('should be created', () => {

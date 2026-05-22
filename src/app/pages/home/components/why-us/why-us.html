@@ -1,4 +1,4 @@
-<section class="py-12 md:py-24">
+<section class="py-16 md:py-24">
   <div class="container mx-auto px-4 sm:px-6">
     <div class="text-center mb-12 md:mb-16">
       <h2 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4 md:mb-6">
@@ -8,11 +8,10 @@
         We don't just provide videos; we provide an immersive environment designed for real skill acquisition.
       </p>
     </div>
+
     @if (features.length > 0) {
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-
       @for (item of features; track item.title) {
-
       <div class="p-6 md:p-10 rounded-[24px] md:rounded-[32px]
                   bg-[var(--background)] shadow-sm border border-[var(--outline)]
                   flex flex-col items-center text-center
@@ -24,41 +23,46 @@
           @switch (item.icon) {
 
           @case ('quiz') {
-          <svg class="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M9 9a3 3 0 1 1 5 2.5c-.5.5-1 1-1 2" />
-            <line x1="12" y1="17" x2="12" y2="17" />
-            <circle cx="12" cy="12" r="10" />
+          <!-- Checklist / interactive quiz icon -->
+          <svg class="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M9 11l3 3L22 4" />
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
           </svg>
           }
 
           @case ('discussion') {
-          <svg class="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+             <svg class="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M21 15a4 4 0 0 1-4 4H7l-4 4V5a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
           </svg>
           }
 
           @case ('path') {
-          <svg class="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M4 4v16" />
-            <path d="M4 4c6 0 6 4 12 4s6-4 6-4" />
+          <!-- Tree / structured path icon -->
+          <svg class="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" viewBox="0 0 24 24">
+            <circle cx="12" cy="5" r="2" />
+            <circle cx="5" cy="19" r="2" />
+            <circle cx="19" cy="19" r="2" />
+            <path d="M12 7v4" />
+            <path d="M12 11l-5.5 6.5" />
+            <path d="M12 11l5.5 6.5" />
           </svg>
           }
 
           }
-
         </div>
 
         <h3 class="text-lg md:text-xl font-bold text-[var(--text-primary)]">
           {{ item.title }}
         </h3>
-
         <p class="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed">
           {{ item.desc }}
         </p>
 
       </div>
-
       }
-
     </div>
     }
+  </div>
+</section>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth';
 import { Router, RouterModule } from '@angular/router';
@@ -20,7 +20,8 @@ export class ForgetPass {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {
     this.forgotForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -30,11 +31,7 @@ export class ForgetPass {
   onSubmit() {
 
     if (this.forgotForm.invalid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Invalid email',
-        text: 'Please enter a valid email address'
-      });
+      this.forgotForm.markAllAsTouched();
       return;
     }
 
@@ -54,7 +51,9 @@ export class ForgetPass {
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
-          this.router.navigate(['/auth/reset-pass']);
+          this.ngZone.run(() => {
+            this.router.navigate(['/auth/reset-password']);
+          });
         });
       },
 
@@ -66,6 +65,9 @@ export class ForgetPass {
           title: 'Failed',
           text: err.error?.message || 'Something went wrong. Please try again.'
         });
+      },
+      complete: () => {
+        this.isLoading = false;
       }
 
     });

@@ -3,18 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
-import { CourseService } from '../../shared/services/course';
+import { CourseService } from '../../user-features/services/user';
 import { AuthService } from '../../auth/services/auth';
-import { ICourseCardData } from '../../components/shared/interfaces/course.model';
+import { ICourseCardData, EnrolledCourse } from '../../user-features/models/course.model';
 import { Card } from '../../components/shared/card/card';
 import { User } from '../../user-features/services/user';
-import { EnrolledCourse } from '../../user-features/models/course.model';
+
 import { CourseCard } from "../../user-features/shared/components/course-card/course-card";
+import { Skeleton } from "../../components/shared/skeleton/skeleton";
 
 @Component({
   selector: 'app-user-dashboard',
   standalone: true,
-  imports: [Card, CommonModule, CourseCard],
+  imports: [Card, CommonModule, CourseCard, Skeleton],
   templateUrl: './user-dashboard.html',
   styleUrl: './user-dashboard.css',
 })
@@ -41,19 +42,17 @@ export class UserDashboard implements OnInit {
     });
   }
 
-  private loadDashboardCourses() {
-    this.userServices.getMyEnrollments();
-
-    this.userServices.courses$.pipe(
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe({
-      next: (courses) => {
-        this.dashboardCourses = courses.slice(0, 4);
-        this.latestCourse = courses[0];
-      },
-      error: () => this.dashboardCourses = [],
-    });
-  }
+private loadDashboardCourses() {
+  this.userServices.getMyEnrollments(1, 4).pipe(
+    takeUntilDestroyed(this.destroyRef)
+  ).subscribe({
+    next: (res) => {
+      this.dashboardCourses = res.data.courses;
+      this.latestCourse = res.data.courses[0];
+    },
+    error: () => this.dashboardCourses = []
+  });
+}
   private loadTopRated() {
     this.courseService.getTopRatedCourses(4).pipe(
       catchError(() => of([])),
@@ -68,5 +67,8 @@ export class UserDashboard implements OnInit {
   }
   goToMyCourses() {
     this.router.navigate(['/my-courses']);
+  }
+   goToExplore() {
+    this.router.navigate(['/explore']);
   }
 }

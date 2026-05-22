@@ -26,48 +26,6 @@
       </div>
     </section>
 
-    <!-- <section class="pb-10">
-      <h2 class="text-[var(--text-primary)] font-title mb-8 text-left">Your Progress</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <div
-          class="bg-[var(--surface)] p-8 rounded-[32px] border border-[var(--outline)] shadow-sm flex items-center gap-6 hover:shadow-md transition-all group">
-          <div
-            class="w-16 h-16 bg-[#F0F7FF] rounded-2xl flex items-center justify-center text-[#2D8CFF] group-hover:scale-105 transition-transform">
-            <i class="fas fa-book-open text-2xl"></i>
-          </div>
-          <div class="flex flex-col">
-            <h3 class="fw-bold text-3xl text-[var(--text-primary)]">4</h3>
-            <p class="text-[var(--text-tertiary)] font-caption uppercase tracking-widest">Active Courses</p>
-          </div>
-        </div>
-
-        <div
-          class="bg-[var(--surface)] p-8 rounded-[32px] border border-[var(--outline)] shadow-sm flex items-center gap-6 hover:shadow-md transition-all group">
-          <div
-            class="w-16 h-16 bg-[#F0FFF8] rounded-2xl flex items-center justify-center text-[#00C566] group-hover:scale-105 transition-transform">
-            <i class="fas fa-chart-line text-2xl"></i>
-          </div>
-          <div class="flex flex-col">
-            <h3 class="fw-bold text-3xl text-[var(--text-primary)]">72%</h3>
-            <p class="text-[var(--text-tertiary)] font-caption uppercase tracking-widest">Completion Rate</p>
-          </div>
-        </div>
-
-        <div
-          class="bg-[var(--surface)] p-8 rounded-[32px] border border-[var(--outline)] shadow-sm flex items-center gap-6 hover:shadow-md transition-all group">
-          <div
-            class="w-16 h-16 bg-[#FFF9F0] rounded-2xl flex items-center justify-center text-[#FF9500] group-hover:scale-105 transition-transform">
-            <i class="fas fa-award text-2xl"></i>
-          </div>
-          <div class="flex flex-col">
-            <h3 class="fw-bold text-3xl text-[var(--text-primary)]">12</h3>
-            <p class="text-[var(--text-tertiary)] font-caption uppercase tracking-widest">Badges Earned</p>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
     <section class="pb-10">
       <div class="flex justify-between items-center mb-8">
         <h2 class="text-[var(--text-primary)] font-title">My Courses</h2>
@@ -88,12 +46,8 @@
             <app-user-course-card [course]="course"></app-user-course-card>
           </div>
         } @empty {
-          <div class="col-span-full text-center py-20 text-[var(--text-tertiary)]">
-            <p class="text-lg mb-4">You haven't enrolled in any courses yet.</p>
-            <a (click)="this.router.navigate(['/explore'])" class="text-[var(--primary)] font-semibold hover:underline cursor-pointer">
-              Explore courses →
-            </a>
-          </div>
+          <app-skeleton [type]="'courses-grid'" [count]="3"></app-skeleton>
+
         }
       </div>
     </section>
@@ -104,7 +58,14 @@
           <p class="font-body text-[var(--text-secondary)] opacity-80">
             Our most popular paths for future developers
           </p>
+
         </div>
+         <a
+          (click)="goToExplore()"
+          class="text-[var(--primary)] font-bold hover:underline cursor-pointer font-caption uppercase tracking-wider"
+        >
+          explore more courses →
+        </a>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -113,18 +74,11 @@
             class="h-full hover:-translate-y-2 transition-transform duration-300 cursor-pointer"
             (click)="onCourseClick(course.slug)"
           >
-            <app-card [courseData]="course"></app-card>
+            <app-card [course]="course"></app-card>
           </div>
         } @empty {
-          <div
-            class="col-span-full text-center py-20 text-[var(--text-tertiary)] bg-[var(--surface)] rounded-[32px] border-2 border-dashed border-[var(--outline)]"
-          >
-            <div class="space-y-3">
-              <i class="fas fa-rocket text-4xl opacity-50 mb-2"></i>
-              <h3 class="text-lg font-semibold text-[var(--text-primary)]">Coming Soon!</h3>
-              <p>Our top-rated courses are currently being curated. Stay tuned!</p>
-            </div>
-          </div>
+          <app-skeleton [type]="'courses-grid'" [count]="3"></app-skeleton>
+
         }
       </div>
     </section>

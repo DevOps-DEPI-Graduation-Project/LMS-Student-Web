@@ -1,264 +1,264 @@
 @if (courseDetail) {
-<div class="min-h-screen bg-[var(--background)] py-12 px-4 md:px-8">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <div class="lg:col-span-2 space-y-8">
-      <section>
-        <h1 class="font-display text-[var(--text-primary)] mt-4 text-3xl md:text-4xl font-bold leading-tight">
-          {{ courseDetail.title }}
-        </h1>
+  <div class="min-h-screen bg-[var(--background)] py-12 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- LEFT SIDE -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- Title & Header Info -->
+        <section>
+          <h1
+            class="font-display text-[var(--text-primary)] mt-4 text-3xl md:text-4xl font-bold leading-tight"
+          >
+            {{ courseDetail.title }}
+          </h1>
 
-        <div class="flex flex-wrap items-center gap-4 mt-4">
-          <div class="flex items-center text-yellow-500 bg-yellow-50 px-2 py-1 rounded-lg">
-            <span class="font-bold mr-1">{{ courseDetail.avg_rating || '0.0' }}</span>
-            <span class="text-sm"> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-yellow-400"
-                fill="currentColor" viewBox="0 0 24 24">
+          <div class="flex flex-wrap items-center gap-4 mt-4">
+            <div class="flex items-center text-yellow-500 bg-yellow-50 px-2 py-1 rounded-lg">
+              <span class="font-bold mr-1">{{ courseDetail.avg_rating || '0.0' }}</span>
+              <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
                 <path
-                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.036 6.26h6.585c.969 0 1.371 1.24.588 1.81l-5.327 3.87 2.036 6.26c.3.921-.755 1.688-1.54 1.118L12 17.77l-5.329 3.475c-.784.57-1.838-.197-1.539-1.118l2.036-6.26-5.327-3.87c-.783-.57-.38-1.81.588-1.81h6.585l2.035-6.26z" />
-              </svg></span>
+                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.036 6.26h6.585c.969 0 1.371 1.24.588 1.81l-5.327 3.87 2.036 6.26c.3.921-.755 1.688-1.54 1.118L12 17.77l-5.329 3.475c-.784.57-1.838-.197-1.539-1.118l2.036-6.26-5.327-3.87c-.783-.57-.38-1.81.588-1.81h6.585l2.035-6.26z"
+                />
+              </svg>
+            </div>
+            <span class="text-[var(--text-tertiary)] text-sm">
+              ({{ courseDetail.ratings_count || 0 }} reviews)
+            </span>
           </div>
 
-          <span class="text-[var(--text-tertiary)] text-sm">
-            ({{ courseDetail.ratings_count || 0 }} reviews)
-          </span>
-          <!-- 
-          <span class="text-[var(--text-tertiary)] text-sm border-l pl-4 border-[var(--outline)]">
-            {{ courseDetail.student_enrollment_count || 0 }} students enrolled
-          </span> -->
-        </div>
-
-        <div class="text-[var(--text-secondary)] mt-4 text-sm flex flex-wrap items-center gap-2">
-          <span>Created by</span>
-          <!-- <span class="text-[var(--primary)] font-semibold hover:underline cursor-pointer">
-            {{ courseDetail.instructor_name }}
-          </span> -->
-          <span class="hidden md:inline mx-2">•</span>
-          <span>Last updated {{ courseDetail.created_at | date: 'MMM yyyy' }}</span>
-          <span class="mx-2">•</span>
-          <span>English</span>
-        </div>
-      </section>
-
-      <section class="bg-[var(--surface)] p-8 rounded-2xl border border-[var(--outline)] shadow-sm">
-        <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">About this course</h2>
-        <p class="font-body text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
-          {{ courseDetail.description }}
-        </p>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold text-[var(--text-primary)] mb-6">Your Instructor</h2>
-        <div
-          class="flex flex-col md:flex-row items-start gap-6 bg-[var(--surface)] p-6 rounded-2xl border border-[var(--outline)]">
-          <img appImgFallback [src]="courseDetail.instructor_image" [srcFallback]="'assets/images/default-avatar.png'"
-            [errorFallback]="'assets/images/default-avatar.png'" alt="Instructor"
-            class="w-24 h-24 rounded-2xl object-cover border-2 border-[var(--outline)] shadow-sm" />
-          <div class="flex-1">
-            <!-- <h3 class="text-xl font-bold text-[var(--text-primary)]">
+          <div class="text-[var(--text-secondary)] mt-4 text-sm flex flex-wrap items-center gap-2">
+            <span>Created by</span>
+            <span class="text-[var(--primary)] font-semibold hover:underline cursor-pointer">
               {{ courseDetail.instructor_name }}
-            </h3> -->
-            <p class="font-body text-[var(--text-secondary)] text-sm leading-relaxed mt-3 italic">
-              {{ courseDetail.instructor_bio || 'Expert instructor at our platform.' }}
-            </p>
-          </div>
-        </div>
-      </section>
-    
-    
-    
-    <!-- Rating Section -->
-@if (isEnrolled()) {
-<section class="bg-[var(--surface)] border border-[var(--outline)] rounded-2xl p-6 shadow-sm">
-
-  <p class="text-xs font-semibold uppercase tracking-widest text-[var(--text-tertiary)] mb-1">
-    Your Feedback
-  </p>
-  <h2 class="text-xl font-bold text-[var(--text-primary)] mb-5">Rate this course</h2>
-
-  @if (ratingSubmitted()) {
-    <!-- Success State -->
-    <div class="flex flex-col items-center gap-3 py-4 text-center">
-      <div class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
-      <p class="text-[var(--text-primary)] font-semibold">Thanks for your rating!</p>
-      <p class="text-[var(--text-tertiary)] text-sm">You can update your rating anytime.</p>
-      <button
-        (click)="ratingSubmitted.set(false)"
-        class="text-sm text-[var(--primary)] hover:underline mt-1">
-        Edit rating
-      </button>
-    </div>
-
-  } @else {
-    <!-- Stars -->
-    <div class="flex items-center gap-2 mb-3">
-      @for (star of [1,2,3,4,5]; track star) {
-        <button
-          (mouseenter)="onHoverStar(star)"
-          (mouseleave)="onLeaveStar()"
-          (click)="onSelectStar(star)"
-          class="transition-transform duration-150 hover:scale-110 focus:outline-none">
-          <svg
-            class="w-9 h-9 transition-colors duration-150"
-            [class]="(hoveredRating() || selectedRating()) >= star
-              ? 'text-yellow-400'
-              : 'text-[var(--outline)]'"
-            fill="currentColor"
-            viewBox="0 0 24 24">
-            <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.036 6.26h6.585c.969 0 
-              1.371 1.24.588 1.81l-5.327 3.87 2.036 6.26c.3.921-.755 1.688-1.54 
-              1.118L12 17.77l-5.329 3.475c-.784.57-1.838-.197-1.539-1.118l2.036-6.26
-              -5.327-3.87c-.783-.57-.38-1.81.588-1.81h6.585l2.035-6.26z"/>
-          </svg>
-        </button>
-      }
-    </div>
-
-    <!-- Label -->
-    <p class="text-sm text-[var(--text-tertiary)] mb-5 min-h-[20px]">
-      {{ getRatingLabel(hoveredRating() || selectedRating()) }}
-    </p>
-
-    <!-- Submit Button -->
-    <button
-      (click)="submitRating()"
-      [disabled]="!selectedRating() || isSubmittingRating()"
-      class="w-full py-3 rounded-xl font-semibold text-sm transition-all active:scale-95
-             disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
-             bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white shadow-md">
-      @if (isSubmittingRating()) {
-        <span class="flex items-center justify-center gap-2">
-          <span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-          Submitting...
-        </span>
-      } @else {
-        Submit Rating
-      }
-    </button>
-  }
-
-</section>
-}
-    </div>
-
-    <div class="lg:col-span-1">
-      <div
-        class="sticky top-8 bg-[var(--surface)] rounded-2xl border border-[var(--outline)] shadow-xl overflow-hidden">
-        <div class="aspect-video relative group overflow-hidden">
-          <img appImgFallback [src]="courseDetail.image" [srcFallback]="'/images/default_image.jpeg'"
-            [errorFallback]="'/images/error_image.png'" alt="Course cover"
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-          <div
-            class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex items-center justify-center gap-4">
-            <span class="text-white bg-[var(--primary)] p-3 rounded-full cursor-pointer hover:scale-110 transition-transform">
-              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
             </span>
-
-            <button (click)="$event.stopPropagation(); exportCourseImage()"
-              class="text-white bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition-all hover:scale-110"
-              title="Export Image">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-            </button>
+            <span class="hidden md:inline mx-2">•</span>
+            <span>Last updated {{ courseDetail.created_at | date: 'MMM yyyy' }}</span>
+            <span class="mx-2">•</span>
+            <span>English</span>
           </div>
-        </div>
+        </section>
 
-        <div class="p-6">
-          <div class="mb-4">
-            <span class="text-3xl font-bold text-[var(--text-primary)]">
-              {{
-              courseDetail.price === '0.00' || courseDetail.price === '0'
-              ? 'Free'
-              : (courseDetail.price | currency)
-              }}
-            </span>
-          </div>
-
-          <button (click)="handleCourseAction()" [disabled]="isLoading || isEnrolling()"
-            class="w-full font-bold py-4 rounded-xl transition-all mb-4 shadow-lg active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
-            [ngClass]="{
-                'bg-[var(--secondary)] text-[var(--on-secondary)]': isEnrolled(),
-                'bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white': !isEnrolled(),
-              }">
-            @if (isEnrolling()) {
-            <span class="flex items-center justify-center gap-2">
-              <span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-              Enrolling...
-            </span>
-            } @else if (isEnrolled()) {
-            Go to Course
-            } @else if (!auth.isLoggedIn()) {
-            Login to Enroll
-            } @else {
-            Enroll Now
-            }
-          </button>
-
-          <p class="text-center text-xs text-[var(--text-tertiary)] mb-6">
-            30-Day Money-Back Guarantee
+        <!-- About this course -->
+        <section
+          class="bg-[var(--surface)] p-8 rounded-2xl border border-[var(--outline)] shadow-sm"
+        >
+          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">About this course</h2>
+          <p class="font-body text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
+            {{ courseDetail.description }}
           </p>
+        </section>
 
-          <div class="space-y-4 text-sm text-[var(--text-secondary)]">
-            <p class="font-bold text-[var(--text-primary)] border-b pb-2">
-              This course includes:
+        <!-- Your Instructor -->
+        <section
+          class="bg-[var(--surface)] p-8 rounded-2xl border border-[var(--outline)] shadow-sm"
+        >
+          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-6">Your Instructor</h2>
+          <div class="flex flex-col md:flex-row items-start gap-6">
+            <img
+              appImgFallback
+              [src]="courseDetail.instructor_image"
+              [srcFallback]="'/images/user-default.jpg'"
+              [errorFallback]="'/images/user-default.jpg'"
+              alt="Instructor"
+              class="w-24 h-24 rounded-2xl object-cover border-2 border-[var(--outline)] shadow-sm flex-shrink-0 -mt-1"
+            />
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-[var(--text-primary)]">
+                {{ courseDetail.instructor_name }}
+              </h3>
+
+              <p class="font-body text-[var(--text-secondary)] text-sm leading-relaxed mt-3 italic">
+                {{ courseDetail.instructor_bio }}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Rating Section -->
+        @if (isEnrolled()) {
+          <section
+            class="bg-[var(--surface)] border border-[var(--outline)] rounded-2xl p-6 shadow-sm"
+          >
+            <p
+              class="text-xs font-semibold uppercase tracking-widest text-[var(--text-tertiary)] mb-1"
+            >
+              Your Feedback
             </p>
+            <h2 class="text-xl font-bold text-[var(--text-primary)] mb-5">Rate this course</h2>
 
-            <div class="flex items-center gap-3">
-              <span class="w-5 h-5 text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M2.25 18L9 11.25l4.306 4.307a.515.515 0 00.707 0L21.75 6M9 11.25l-6.75 6.75M9 11.25l6.75 6.75M21.75 6H16.5M21.75 6v5.25" />
-                </svg>
-              </span>
-              <span>Level: <strong>{{ courseDetail.level }}</strong></span>
+            @if (ratingSubmitted()) {
+              <div class="flex flex-col items-center gap-3 py-4 text-center">
+                <div
+                  class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center"
+                >
+                  <svg
+                    class="w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p class="text-[var(--text-primary)] font-semibold">Thanks for your rating!</p>
+                <p class="text-[var(--text-tertiary)] text-sm">
+                  You can update your rating anytime.
+                </p>
+                <button
+                  type="button"
+                  (click)="ratingSubmitted.set(false)"
+                  class="text-sm text-[var(--primary)] hover:underline mt-1"
+                >
+                  Edit rating
+                </button>
+              </div>
+            } @else {
+              <div class="flex items-center gap-2 mb-3">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                  <button
+                    type="button"
+                    [title]="'Rate ' + star + ' stars'"
+                    [aria-label]="'Rate ' + star + ' stars'"
+                    (mouseenter)="onHoverStar(star)"
+                    (mouseleave)="onLeaveStar()"
+                    (click)="onSelectStar(star)"
+                    class="transition-transform duration-150 hover:scale-110 focus:outline-none"
+                  >
+                    <svg
+                      class="w-9 h-9 transition-colors duration-150"
+                      [class]="
+                        (hoveredRating() || selectedRating()) >= star
+                          ? 'text-yellow-400'
+                          : 'text-[var(--outline)]'
+                      "
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.036 6.26h6.585c.969 0 1.371 1.24.588 1.81l-5.327 3.87 2.036 6.26c.3.921-.755 1.688-1.54 1.118L12 17.77l-5.329 3.475c-.784.57-1.838-.197-1.539-1.118l2.036-6.26-5.327-3.87c-.783-.57-.38-1.81.588-1.81h6.585l2.035-6.26z"
+                      />
+                    </svg>
+                  </button>
+                }
+              </div>
+
+              <p class="text-sm text-[var(--text-tertiary)] mb-5 min-h-[20px]">
+                {{ getRatingLabel(hoveredRating() || selectedRating()) }}
+              </p>
+
+              <button
+                type="button"
+                (click)="submitRating()"
+                [disabled]="!selectedRating() || isSubmittingRating()"
+                class="w-full py-3 rounded-xl font-semibold text-sm transition-all active:scale-95 disabled:opacity-50 disabled:cursor-allowed disabled:active:scale-100 bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white shadow-md"
+              >
+                @if (isSubmittingRating()) {
+                  <span class="flex items-center justify-center gap-2">
+                    <span
+                      class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                    ></span>
+                    Submitting...
+                  </span>
+                } @else {
+                  Submit Rating
+                }
+              </button>
+            }
+          </section>
+        }
+      </div>
+
+      <!-- RIGHT SIDE (Sticky Sidebar) -->
+      <div class="lg:col-span-1">
+        <div
+          class="sticky top-8 bg-[var(--surface)] rounded-2xl border border-[var(--outline)] shadow-xl overflow-hidden"
+        >
+          <!-- Video/Image Preview -->
+          <div class="aspect-video relative group overflow-hidden">
+            <img
+              appImgFallback
+              [src]="courseDetail.image"
+              [srcFallback]="'/images/default_image.jpeg'"
+              [errorFallback]="'/images/error_image.png'"
+              alt="Course cover"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div
+              class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex items-center justify-center gap-4"
+            ></div>
+          </div>
+
+          <div class="p-6">
+            <!-- Price -->
+            <div class="mb-4 text-3xl font-bold text-[var(--text-primary)]">
+              {{
+                courseDetail.price === '0.00' || courseDetail.price === '0'
+                  ? 'Free'
+                  : (courseDetail.price | currency)
+              }}
             </div>
 
-            <div class="flex items-center gap-3">
-              <span class="w-5 h-5 text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </span>
-              <span>Full lifetime access</span>
-            </div>
+            <!-- Enroll/Start Learning Button -->
+            <button
+              type="button"
+              (click)="handleCourseAction()"
+              [disabled]="isLoading || isEnrolling()"
+              class="w-full font-bold py-4 rounded-xl mb-4 transition-all active:scale-95 shadow-lg"
+              [ngClass]="{
+                'bg-[var(--secondary)] text-[var(--on-secondary)] hover:bg-[var(--secondary-hover)]':
+                  isEnrolled() && auth.isLoggedIn(),
+                'bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)]':
+                  !isEnrolled() || !auth.isLoggedIn(),
+              }"
+            >
+              @if (isEnrolling()) {
+                <span class="flex items-center justify-center gap-2">
+                  <span
+                    class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"
+                  ></span>
+                  Enrolling...
+                </span>
+              } @else if (!auth.isLoggedIn()) {
+                Login to Enroll
+              } @else if (isEnrolled()) {
+                Start Learning
+              } @else {
+                Enroll Now
+              }
+            </button>
 
-            <div class="flex items-center gap-3">
-              <span class="w-5 h-5 text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-                </svg>
-              </span>
-              <span>Access on mobile and TV</span>
-            </div>
+            <div class="space-y-3 text-sm text-[var(--text-secondary)]">
+              <div class="flex gap-2 items-center">
+                <span>Level:</span>
+                <b class="text-[var(--text-primary)]">{{ courseDetail.level }}</b>
+              </div>
 
-            <div class="flex items-center gap-3 border-t pt-4 font-medium text-[var(--primary)]">
-              <span>Category: {{ courseDetail.category }}</span>
+              <!-- is_active Status -->
+              <div class="flex gap-2 items-center">
+                <span>Status:</span>
+                <div class="flex items-center gap-2">
+
+                  <b class="text-[var(--text-primary)]">
+                    {{ courseDetail.is_active ? 'Active' : 'Inactive' }}
+                  </b>
+                </div>
+              </div>
+
+              <div
+                class="border-t border-[var(--outline)] pt-4 mt-4 text-[var(--primary)] font-medium"
+              >
+                Category: {{ courseDetail.category }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    
-    
-    
-    
     </div>
   </div>
-</div>
 } @else {
-<div class="flex flex-col justify-center items-center min-h-screen gap-4">
-  <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--primary)]"></div>
-  <p class="text-[var(--text-secondary)] animate-pulse font-medium">Loading Course Content...</p>
-</div>
+  <div class="min-h-screen bg-[var(--background)] py-12 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <app-skeleton type="course-detail" />
+    </div>
+  </div>
 }

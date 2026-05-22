@@ -1,83 +1,65 @@
 <nav class="sticky top-0 z-40 bg-[var(--surface)] border-b border-[var(--divider)] px-6 py-3">
   <div class="flex items-center justify-between">
-
     <!-- ── LEFT: Logo + Links ── -->
     <div class="flex items-center gap-8">
-
       <!-- Logo -->
-      <a routerLink="/home" class="flex items-center gap-3 group">
-
-        <div class="w-10 h-10 rounded-2xl flex items-center justify-center
-              bg-[var(--primary)] text-white shadow-md group-hover:scale-105 transition">
-
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
-            <rect width="40" height="40" rx="12" fill="var(--primary)" />
-            <circle cx="14" cy="14" r="4" fill="white" opacity="0.75" />
-            <path d="M6 28c0-4.418 3.582-7 8-7" stroke="white" stroke-width="2.5" stroke-linecap="round"
-              opacity="0.75" />
-            <circle cx="26" cy="14" r="4" fill="white" />
-            <path d="M34 28c0-4.418-3.582-7-8-7" stroke="white" stroke-width="2.5" stroke-linecap="round" />
-            <path d="M17 22 Q20 19 23 22" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" />
-          </svg>
-
-        </div>
-
+      <a routerLink="/home" class="flex items-center gap-2 group">
+        <img src="/images/app_logo.png" alt="CommitMa3ana Logo" class="w-10 h-10 rounded-2xl object-cover shadow-md" />
         <span class="text-xl font-semibold tracking-wide">
-
           <span class="text-[var(--primary)] ml-1">Commit</span>
           <span class="text-[var(--secondary)]">Ma3ana</span>
         </span>
-
       </a>
 
-      <!-- Desktop Links -->
-      <div class="hidden md:flex items-center gap-6 text-sm">
+      <div class="hidden md:flex items-center gap-2 text-sm">
 
-        <a routerLink="/home" routerLinkActive="text-[var(--primary)] font-semibold"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors">
-          Home
+        <!-- Home -->
+        <a routerLink="/home" routerLinkActive="bg-[var(--primary)]/10 text-[var(--primary)] font-semibold"
+          class="group px-4 py-2 rounded-full relative text-[var(--text-secondary)] hover:text-[var(--primary)] transition-all duration-300 overflow-hidden">
+          <span class="relative z-10">Home</span>
+          <!-- الخط المتحرك -->
+          <span
+            class="absolute bottom-1 left-1/2 w-0 h-[2px] bg-[var(--primary)] transition-all duration-300 ease-out group-hover:w-1/2 group-hover:left-1/4"></span>
         </a>
 
-
-        <a routerLink="/explore" routerLinkActive="text-[var(--primary)] font-semibold"
-          class="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors">
-          Explore
+        <!-- Explore -->
+        <a routerLink="/explore" routerLinkActive="bg-[var(--primary)]/10 text-[var(--primary)] font-semibold"
+          class="group px-4 py-2 rounded-full relative text-[var(--text-secondary)] hover:text-[var(--primary)] transition-all duration-300 overflow-hidden">
+          <span class="relative z-10">Explore</span>
+          <span
+            class="absolute bottom-1 left-1/2 w-0 h-[2px] bg-[var(--primary)] transition-all duration-300 ease-out group-hover:w-1/2 group-hover:left-1/4"></span>
         </a>
+
+        <!-- My Courses -->
         @if (isLoggedIn()) {
-        <a routerLink="/my-courses" routerLinkActive="text-[var(--primary)] font-semibold"
-          class="text-[var(--text-secondary)] hover:text-[var(--primary)]">
-          My Courses
-        </a>
-        } @else {
-        <a routerLink="/" routerLinkActive="text-[var(--primary)] font-semibold"
-          class="text-[var(--text-secondary)] hover:text-[var(--primary)]">
-          Courses
+        <a routerLink="/my-courses" routerLinkActive="bg-[var(--primary)]/10 text-[var(--primary)] font-semibold"
+          class="group px-4 py-2 rounded-full relative text-[var(--text-secondary)] hover:text-[var(--primary)] transition-all duration-300 overflow-hidden">
+          <span class="relative z-10">My Courses</span>
+          <span
+            class="absolute bottom-1 left-1/2 w-0 h-[2px] bg-[var(--primary)] transition-all duration-300 ease-out group-hover:w-1/2 group-hover:left-1/4"></span>
         </a>
         }
+
       </div>
     </div>
 
     <!-- ── RIGHT: Theme + Auth ── -->
     <div class="flex items-center gap-3">
-
       <!-- Theme Toggle -->
-      <button (click)="toggleTheme()" class="p-2 rounded-lg border border-[var(--outline)]
-                     hover:bg-[var(--background)] transition-colors">
+      <button (click)="toggleTheme()"
+        class="p-2 rounded-lg border border-[var(--outline)] hover:bg-[var(--background)] transition-colors">
         {{ isDark() ? '☀️' : '🌙' }}
       </button>
 
       <!-- GUEST buttons -->
       @if (!isLoggedIn()) {
       <div class="hidden md:flex gap-2">
-        <button (click)="goLogin()" class="px-4 py-1.5 rounded-lg border border-[var(--primary)]
-                         text-[var(--primary)] text-sm font-semibold
-                         hover:bg-[var(--primary)] hover:text-white transition-all">
+        <button (click)="goLogin()"
+          class="px-4 py-1.5 rounded-lg border border-[var(--primary)] text-[var(--primary)] text-sm font-semibold hover:bg-[var(--primary)] hover:text-white transition-all">
           Login
         </button>
-        <button (click)="goSignup()" class="px-4 py-1.5 rounded-lg bg-[var(--primary)]
-                         text-[var(--on-primary)] text-sm font-semibold
-                         hover:bg-[var(--primary-hover)] transition-colors">
+        <button (click)="goSignup()"
+          class="px-4 py-1.5 rounded-lg bg-[var(--primary)] text-[var(--on-primary)] text-sm font-semibold hover:bg-[var(--primary-hover)] transition-colors">
           Sign Up
         </button>
       </div>
@@ -86,93 +68,100 @@
       <!-- USER avatar + dropdown -->
       @if (isLoggedIn()) {
       <div class="relative hidden md:block profile-menu-wrapper">
-
-        <button (click)="toggleProfileMenu()" class="flex items-center gap-2 rounded-full
-                         hover:opacity-80 transition-opacity">
-
+        <button (click)="toggleProfileMenu()"
+          class="flex items-center gap-2 rounded-full hover:opacity-80 transition-opacity">
           <span class="text-sm font-semibold text-[var(--text-primary)] hidden lg:block">
             {{ username() ?? 'User' }}
           </span>
 
-          <div class="w-9 h-9 flex items-center justify-center rounded-full
-                        bg-[var(--primary)] text-white font-bold text-sm">
+          <div
+            class="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--primary)] text-white font-bold text-sm">
             {{ userAvatar() ?? 'U' }}
           </div>
         </button>
-
-        <!-- Dropdown -->
         @if (isProfileMenuOpen) {
-        <div class="absolute right-0 top-12 w-44 bg-[var(--surface)]
-                        border border-[var(--outline)] rounded-xl shadow-xl py-2 z-50">
+        <div class="absolute right-0 top-14 w-48 z-50
+           bg-[var(--surface)]/95 backdrop-blur-md
+           border border-[var(--outline)]/60
+           rounded-2xl shadow-2xl
+           overflow-hidden
+           animate-dropdown">
+          <div class="px-4 pt-3 pb-2">
+            <p class="text-xs font-semibold text-[var(--text-tertiary)] uppercase tracking-widest">
+              Account
+            </p>
+          </div>
 
-          <button (click)="goDashboard()" class="flex items-center gap-2 text-left px-4 py-2.5 rounded-xl text-[var(--text-secondary)]
-         hover:bg-[var(--background)] transition-colors">
-
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M11.25 3c.414 0 .75.336.75.75v1.5a6.75 6.75 0 012.07.86l1.06-1.06a.75.75 0 111.06 1.06l-1.06 1.06c.37.63.65 1.31.82 2.04h1.5a.75.75 0 010 1.5h-1.5a6.75 6.75 0 01-.82 2.04l1.06 1.06a.75.75 0 11-1.06 1.06l-1.06-1.06a6.75 6.75 0 01-2.07.86v1.5a.75.75 0 01-1.5 0v-1.5a6.75 6.75 0 01-2.07-.86l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a6.75 6.75 0 01-.82-2.04H3.75a.75.75 0 010-1.5h1.5c.17-.73.45-1.41.82-2.04L5 6.22a.75.75 0 011.06-1.06l1.06 1.06a6.75 6.75 0 012.07-.86v-1.5c0-.414.336-.75.75-.75z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-
-            Settings
+          <button (click)="goDashboard()" class="group flex items-center gap-3 w-full text-left px-4 py-2.5
+             text-[var(--text-secondary)] hover:text-[var(--text-primary)]
+             hover:bg-[var(--background)]/80
+             transition-all duration-200">
+            <span class="w-8 h-8 rounded-xl bg-[var(--background)] group-hover:bg-[var(--primary)]/10
+                   flex items-center justify-center transition-all duration-200 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 group-hover:text-[var(--primary)] transition-colors" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+            </span>
+            <span class="text-sm font-medium">Settings</span>
           </button>
-          <div class="mx-3 my-1 border-t border-[var(--divider)]"></div>
 
-          <button (click)="logout()" class="flex items-center gap-2 text-left px-4 py-2.5 rounded-xl text-red-500
-         hover:bg-red-50 transition-colors">
+          <div class="mx-4 my-1 border-t border-[var(--outline)]/50"></div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M18 12l-3-3m3 3l-3 3m3-3H9" />
-            </svg>
-
-            Logout
+          <button (click)="logout()" class="group flex items-center gap-3 w-full text-left px-4 py-2.5 mb-1
+             text-[var(--text-secondary)] hover:text-red-500
+             hover:bg-red-50/80 dark:hover:bg-red-950/30
+             transition-all duration-200">
+            <span class="w-8 h-8 rounded-xl bg-[var(--background)] group-hover:bg-red-100/80 dark:group-hover:bg-red-950/50
+                   flex items-center justify-center transition-all duration-200 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-colors" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 12l-3-3m3 3l-3 3m3-3H9" />
+              </svg>
+            </span>
+            <span class="text-sm font-medium">Logout</span>
           </button>
-
         </div>
         }
       </div>
       }
 
       <!-- Mobile hamburger -->
-      <button (click)="toggleMobileMenu()" class="md:hidden p-2 rounded-lg border border-[var(--outline)]
-                     hover:bg-[var(--background)] transition-colors">
+      <button (click)="toggleMobileMenu()"
+        class="md:hidden p-2 rounded-lg border border-[var(--outline)] hover:bg-[var(--background)] transition-colors">
         {{ isMobileMenuOpen ? '✕' : '☰' }}
       </button>
-
     </div>
   </div>
 
   <!-- ── Mobile Menu ── -->
   @if (isMobileMenuOpen) {
-  <div class="md:hidden mt-3 pt-3 border-t border-[var(--divider)]
-                flex flex-col gap-1 text-sm">
-
+  <div class="md:hidden mt-3 pt-3 border-t border-[var(--divider)] flex flex-col gap-1 text-sm">
     <a routerLink="/home" routerLinkActive="bg-[var(--primary)] text-white" [routerLinkActiveOptions]="{ exact: true }"
-      class="px-4 py-2.5 rounded-xl text-[var(--text-secondary)]
-                hover:bg-[var(--background)] transition-colors">
+      class="px-4 py-2.5 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--background)] transition-colors">
       Home
     </a>
 
-    <a routerLink="/explore" routerLinkActive="bg-[var(--primary)] text-white" class="px-4 py-2.5 rounded-xl text-[var(--text-secondary)]
-                hover:bg-[var(--background)] transition-colors">
+    <a routerLink="/explore" routerLinkActive="bg-[var(--primary)] text-white"
+      class="px-4 py-2.5 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--background)] transition-colors">
       Explore
     </a>
 
     <!-- My Courses mobile -->
-    <a (click)="goMyCourses()" class="px-4 py-2.5 rounded-xl text-[var(--text-secondary)]
-                hover:bg-[var(--background)] transition-colors cursor-pointer">
+    <a (click)="goMyCourses()"
+      class="px-4 py-2.5 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--background)] transition-colors cursor-pointer">
       My Courses
     </a>
 
     @if (isLoggedIn()) {
     <div class="mx-1 my-1 border-t border-[var(--divider)]"></div>
-    <button (click)="goDashboard()" class="flex items-center gap-2 text-left px-4 py-2.5 rounded-xl text-[var(--text-secondary)]
-         hover:bg-[var(--background)] transition-colors">
-
+    <button (click)="goDashboard()"
+      class="flex items-center gap-2 text-left px-4 py-2.5 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--background)] transition-colors">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
         stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -183,9 +172,8 @@
       Settings
     </button>
 
-    <button (click)="logout()" class="flex items-center gap-2 text-left px-4 py-2.5 rounded-xl text-red-500
-         hover:bg-red-50 transition-colors">
-
+    <button (click)="logout()"
+      class="flex items-center gap-2 text-left px-4 py-2.5 rounded-xl text-red-500 hover:bg-red-50 transition-colors">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
         stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -200,18 +188,16 @@
     @if (!isLoggedIn()) {
     <div class="mx-1 my-1 border-t border-[var(--divider)]"></div>
 
-    <button (click)="goLogin()" class="text-left px-4 py-2.5 rounded-xl text-[var(--text-secondary)]
-                       hover:bg-[var(--background)] transition-colors">
+    <button (click)="goLogin()"
+      class="text-left px-4 py-2.5 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--background)] transition-colors">
       Login
     </button>
 
-    <button (click)="goSignup()" class="mx-1 px-4 py-2.5 rounded-xl bg-[var(--primary)]
-                       text-[var(--on-primary)] font-semibold text-center">
+    <button (click)="goSignup()"
+      class="mx-1 px-4 py-2.5 rounded-xl bg-[var(--primary)] text-[var(--on-primary)] font-semibold text-center">
       Sign Up
     </button>
     }
-
   </div>
   }
-
 </nav>

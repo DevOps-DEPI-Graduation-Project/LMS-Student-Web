@@ -54,9 +54,7 @@
 
   <!-- ── Loading ── -->
   @if (isLoading) {
-    <div class="flex justify-center items-center py-24">
-      <div class="w-9 h-9 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
-    </div>
+    <app-skeleton type="courses-grid" [count]="4" />
   }
 
   <!-- ── Error ── -->
@@ -99,12 +97,32 @@
   }
 
   <!-- ── Course Grid ── -->
-  @if (!isLoading && !error && courses.length > 0) {
+ @if (!isLoading && !error && courses.length > 0) {
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       @for (course of courses; track course.slug) {
         <app-user-course-card [course]="course" />
       }
     </div>
+
+    <!-- View More -->
+    @if (hasMore) {
+      <div class="flex justify-center mt-10">
+        <button
+          (click)="loadMore()"
+          [disabled]="isLoadingMore"
+          class="px-6 py-2.5 rounded-xl border border-[var(--primary)] text-[var(--primary)]
+                 text-sm font-semibold hover:bg-[var(--primary)] hover:text-white
+                 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          {{ isLoadingMore ? 'Loading...' : 'View More My Courses' }}
+        </button>
+      </div>
+    }
+
+    @if (!hasMore && courses.length > 0) {
+      <div class="text-center mt-8 text-sm text-[var(--text-tertiary)]">
+        All courses loaded
+      </div>
+    }
   }
 
 </section>

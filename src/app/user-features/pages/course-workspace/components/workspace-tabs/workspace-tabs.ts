@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -8,5 +8,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './workspace-tabs.css',
 })
 export class WorkspaceTabs {
+  @Input() courseSlug!: string;
 
 }

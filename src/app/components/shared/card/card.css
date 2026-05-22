@@ -1,7 +1,10 @@
-/* امسحي كل القديم وحطي ده */
-:host {
+/* :host {
     display: block;
     height: 100%;
 }
 
 
+svg:hover {
+    transform: scale(1.1);
+    transition: 0.2s;
+} */

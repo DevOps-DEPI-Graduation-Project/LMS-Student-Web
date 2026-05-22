@@ -10,14 +10,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Settings } from '../../../user-services/settings';
 import { AuthService } from '../../../auth/services/auth';
 import { Student } from '../../../models/user.models';
+import { ThemeService } from '../../../core/theme';
 import Swal from 'sweetalert2';
 
 import { ImgFallback } from '../../../shared/directives/img-fallback';
+import { Skeleton } from '../../../components/shared/skeleton/skeleton';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ImgFallback],
+  imports: [ReactiveFormsModule, CommonModule, ImgFallback, Skeleton],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -36,7 +38,8 @@ export class Profile implements OnInit {
   constructor(
     private settings: Settings,
     private fb: FormBuilder,
-    private auth: AuthService
+    private auth: AuthService,
+    private theme: ThemeService
   ) {
     this.editForm = this.buildForm();
   }
@@ -80,6 +83,9 @@ export class Profile implements OnInit {
       first_name: s.first_name ?? '',
       last_name: s.last_name ?? '',
     });
+
+    const currentTheme = localStorage.getItem('theme') || 'system';
+    this.editForm.patchValue({ theme: currentTheme });
   }
 
   get fullName(): string {
@@ -141,6 +147,24 @@ export class Profile implements OnInit {
     });
   }
 
+  savePreferences(): void {
+    const themeValue = this.editForm.value.theme;
+    if (themeValue === 'system') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      this.theme.setTheme(prefersDark ? 'dark' : 'light');
+    } else {
+      this.theme.setTheme(themeValue);
+    }
+
+    Swal.fire({
+      title: 'Preferences Saved',
+      text: 'Your theme preferences have been updated.',
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  }
+
   onSignOut(): void {
     Swal.fire({
       title: 'Sign Out',
@@ -158,6 +182,7 @@ export class Profile implements OnInit {
     return this.fb.group({
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
+      theme: ['system'],
     });
   }
 }

@@ -5,6 +5,7 @@ import { PrivateLayout } from './layouts/private-layout/private-layout';
 import { AuthLayout } from './auth/shared/auth-layout/auth-layout';
 import { authGuard, guestGuard } from './auth/guards/auth-guard';
 import { AuthService } from './auth/services/auth';
+import { filter, take, map } from 'rxjs';
 
 export const routes: Routes = [
   {
@@ -14,12 +15,24 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./pages/home/home').then(m => m.Home),
-        canActivate: [() => {
-          const auth = inject(AuthService);
-          const router = inject(Router);
+      canActivate: [() => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
 
-          return auth.isLoggedIn() ? router.createUrlTree(['/user-dashboard']) : true;
-        }],
+  if (auth.isLoggedIn()) {
+    return router.createUrlTree(['/user-dashboard']);
+  }
+
+
+  return auth.authReady$.pipe(
+    filter(value => value !== undefined),
+    take(1),
+    map(user => {
+      if (user) return router.createUrlTree(['/user-dashboard']);
+      return true;
+    })
+  );
+}],
       },
       {
         path: 'home',
@@ -98,43 +111,44 @@ export const routes: Routes = [
     ]
   },
   {
-  path: 'CourseWorkspace/:slug',
-  component: PrivateLayout,
-  canActivate: [authGuard],
-  children: [
-    {
-      path: '',
-      loadComponent: () =>
-        import('./user-features/pages/course-workspace/course-workspace')
-          .then(m => m.CourseWorkspace),
-      children: [
-        {
-          path: '',
-          redirectTo: 'materials',
-          pathMatch: 'full'
-        },
-        {
-          path: 'materials',
-          loadComponent: () =>
-            import('./user-features/pages/course-workspace/components/tab-materials/tab-materials')
-              .then(m => m.TabMaterials),
-        },
-        {
-          path: 'videos',
-          loadComponent: () =>
-            import('./user-features/pages/course-workspace/components/tab-videos/tab-videos')
-              .then(m => m.TabVideos),
-        },
-        {
-          path: 'quiz',
-          loadComponent: () =>
-            import('./user-features/pages/course-workspace/components/tab-quiz/tab-quiz')
-              .then(m => m.TabQuiz),
-        },
-      ]
-    }
-  ]
-},
+    path: 'CourseWorkspace/:slug',
+    component: PrivateLayout,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./user-features/pages/course-workspace/course-workspace')
+            .then(m => m.CourseWorkspace),
+        children: [
+
+          {
+            path: '',
+            redirectTo: 'materials',
+            pathMatch: 'full'
+          },
+          {
+            path: 'materials',
+            loadComponent: () =>
+              import('./user-features/pages/course-workspace/components/tab-materials/tab-materials')
+                .then(m => m.TabMaterials),
+          },
+          {
+            path: 'videos',
+            loadComponent: () =>
+              import('./user-features/pages/course-workspace/components/tab-videos/tab-videos')
+                .then(m => m.TabVideos),
+          },
+          {
+            path: 'quiz',
+            loadComponent: () =>
+              import('./user-features/pages/course-workspace/components/tab-quiz/tab-quiz')
+                .then(m => m.TabQuiz),
+          }
+        ]
+      }
+    ]
+  },
   {
     path: 'dashboard',
     loadChildren: () =>
