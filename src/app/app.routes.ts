@@ -1,7 +1,7 @@
 import { Routes, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { PublicLayout } from './layouts/public-layout/public-layout';
-import { PrivateLayout } from './layouts/private-layout/private-layout';
+import { PrivateLayoutComponent } from './layouts/private-layout/private-layout';
 import { AuthLayout } from './auth/shared/auth-layout/auth-layout';
 import { authGuard, guestGuard } from './auth/guards/auth-guard';
 import { AuthService } from './auth/services/auth';
@@ -15,24 +15,23 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./pages/home/home').then(m => m.Home),
-      canActivate: [() => {
-  const auth = inject(AuthService);
-  const router = inject(Router);
+        canActivate: [() => {
+          const auth = inject(AuthService);
+          const router = inject(Router);
 
-  if (auth.isLoggedIn()) {
-    return router.createUrlTree(['/user-dashboard']);
-  }
+          if (auth.isLoggedIn()) {
+            return router.createUrlTree(['/user-dashboard']);
+          }
 
-
-  return auth.authReady$.pipe(
-    filter(value => value !== undefined),
-    take(1),
-    map(user => {
-      if (user) return router.createUrlTree(['/user-dashboard']);
-      return true;
-    })
-  );
-}],
+          return auth.authReady$.pipe(
+            filter(value => value !== undefined),
+            take(1),
+            map(user => {
+              if (user) return router.createUrlTree(['/user-dashboard']);
+              return true;
+            })
+          );
+        }],
       },
       {
         path: 'home',
@@ -54,7 +53,6 @@ export const routes: Routes = [
       },
     ],
   },
-
 
   {
     path: 'auth',
@@ -85,10 +83,9 @@ export const routes: Routes = [
     ],
   },
 
-  // Private — User dashboard
   {
     path: 'user-dashboard',
-    component: PrivateLayout,
+    component: PrivateLayoutComponent,
     canActivate: [authGuard],
     children: [
       {
@@ -100,7 +97,7 @@ export const routes: Routes = [
   },
   {
     path: 'my-courses',
-    component: PrivateLayout,
+    component: PrivateLayoutComponent,
     canActivate: [authGuard],
     children: [
       {
@@ -112,7 +109,7 @@ export const routes: Routes = [
   },
   {
     path: 'CourseWorkspace/:slug',
-    component: PrivateLayout,
+    component: PrivateLayoutComponent,
     canActivate: [authGuard],
     children: [
       {
@@ -121,7 +118,6 @@ export const routes: Routes = [
           import('./user-features/pages/course-workspace/course-workspace')
             .then(m => m.CourseWorkspace),
         children: [
-
           {
             path: '',
             redirectTo: 'materials',
@@ -156,7 +152,7 @@ export const routes: Routes = [
   },
   {
     path: 'explore',
-    component: PrivateLayout,
+    component: PrivateLayoutComponent,
     canActivate: [authGuard],
     children: [
       {
@@ -177,7 +173,5 @@ export const routes: Routes = [
       import('./pages/home/home').then(m => m.Home)
   },
 
-
-  // Catch all
   { path: '**', redirectTo: '' },
 ];
