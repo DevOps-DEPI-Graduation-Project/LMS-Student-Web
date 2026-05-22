@@ -1,13 +1,17 @@
 @if (isLoading()) {
 <div class="grid gap-5 min-h-0" style="grid-template-columns: 320px 1fr; height: calc(100vh - 160px);">
   <div class="h-full overflow-y-auto overflow-x-hidden pr-1">
-    <div class="rounded-lg mb-4" style="width:140px; height:20px; background-color: var(--outline); animation: pulse 1.5s infinite;"></div>
+    <div class="rounded-lg mb-4"
+      style="width:140px; height:20px; background-color: var(--outline); animation: pulse 1.5s infinite;"></div>
     @for (i of [1,2,3,4]; track i) {
     <div class="flex gap-3 mb-3 p-3 rounded-xl" style="background-color: var(--surface);">
-      <div class="rounded-lg flex-shrink-0" style="width:56px; height:56px; background-color: var(--outline); animation: pulse 1.5s infinite;"></div>
+      <div class="rounded-lg flex-shrink-0"
+        style="width:56px; height:56px; background-color: var(--outline); animation: pulse 1.5s infinite;"></div>
       <div class="flex-1 flex flex-col gap-2 justify-center">
-        <div class="rounded" style="height:12px; width:70%; background-color: var(--outline); animation: pulse 1.5s infinite;"></div>
-        <div class="rounded" style="height:12px; width:40%; background-color: var(--outline); animation: pulse 1.5s infinite;"></div>
+        <div class="rounded"
+          style="height:12px; width:70%; background-color: var(--outline); animation: pulse 1.5s infinite;"></div>
+        <div class="rounded"
+          style="height:12px; width:40%; background-color: var(--outline); animation: pulse 1.5s infinite;"></div>
       </div>
     </div>
     }
@@ -42,13 +46,14 @@
 <div class="grid gap-5 min-h-0" style="grid-template-columns: 320px 1fr; height: calc(100vh - 160px);">
 
   <!-- ── LEFT: Video List ── -->
-  <aside class="h-full overflow-y-auto overflow-x-hidden pr-1 flex flex-col gap-2" style="scrollbar-width: thin; scrollbar-color: var(--outline) transparent;">
+  <aside class="h-full overflow-y-auto overflow-x-hidden pr-1 flex flex-col gap-2"
+    style="scrollbar-width: thin; scrollbar-color: var(--outline) transparent;">
 
     <!-- Header -->
     <div class="flex items-center justify-between px-1 mb-1">
       <span class="text-sm font-semibold" style="color: var(--text-primary);">Course Videos</span>
       <span class="text-xs font-medium px-2 py-0.5 rounded-full"
-            style="background-color: var(--outline); color: var(--text-tertiary);">
+        style="background-color: var(--outline); color: var(--text-tertiary);">
         {{ videos().length }} videos
       </span>
     </div>
@@ -56,14 +61,13 @@
     <!-- Video Cards -->
     @for (video of videos(); track video.slug) {
     <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 border"
-         [style.background-color]="selectedVideo()?.slug === video.slug ? 'var(--primary)' : 'var(--surface)'"
-         [style.border-color]="selectedVideo()?.slug === video.slug ? 'var(--primary)' : 'var(--outline)'"
-         (click)="select(video)">
+      [style.background-color]="selectedVideo()?.slug === video.slug ? 'var(--primary)' : 'var(--surface)'"
+      [style.border-color]="selectedVideo()?.slug === video.slug ? 'var(--primary)' : 'var(--outline)'"
+      (click)="select(video)">
 
       <!-- Thumb with radial progress -->
-      <div class="relative flex-shrink-0 flex items-center justify-center rounded-lg"
-           style="width: 48px; height: 48px;"
-           [style.background-color]="selectedVideo()?.slug === video.slug ? 'rgba(255,255,255,0.15)' : 'var(--background)'">
+      <div class="relative flex-shrink-0 flex items-center justify-center rounded-lg" style="width: 48px; height: 48px;"
+        [style.background-color]="selectedVideo()?.slug === video.slug ? 'rgba(255,255,255,0.15)' : 'var(--background)'">
 
         <!-- Radial Progress Ring -->
         <svg class="absolute inset-0 w-full h-full" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
@@ -78,27 +82,25 @@
 
         <!-- Completed check -->
         @if (video.is_completed) {
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" class="relative z-10"
-             style="width: 16px; height: 16px;"
-             [style.stroke]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--primary)'">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" class="relative z-10" style="width: 16px; height: 16px;"
+          [style.stroke]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--primary)'">
           <polyline points="20 6 9 17 4 12" />
         </svg>
         }
 
         <!-- YouTube icon -->
         @if (!video.is_completed && getType(video) === 'youtube') {
-        <svg viewBox="0 0 24 24" fill="currentColor" class="relative z-10"
-             style="width: 14px; height: 14px;"
-             [style.color]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--text-tertiary)'">
-          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0C.488 3.45.029 5.804 0 12c.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0C23.512 20.55 23.971 18.196 24 12c-.029-6.185-.484-8.549-4.385-8.816zM9 16V8l8 3.993L9 16z"/>
+        <svg viewBox="0 0 24 24" fill="currentColor" class="relative z-10" style="width: 14px; height: 14px;"
+          [style.color]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--text-tertiary)'">
+          <path
+            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0C.488 3.45.029 5.804 0 12c.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0C23.512 20.55 23.971 18.196 24 12c-.029-6.185-.484-8.549-4.385-8.816zM9 16V8l8 3.993L9 16z" />
         </svg>
         }
 
         <!-- Upload icon -->
         @if (!video.is_completed && getType(video) === 'upload') {
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" class="relative z-10"
-             style="width: 14px; height: 14px;"
-             [style.stroke]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--text-tertiary)'">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" class="relative z-10" style="width: 14px; height: 14px;"
+          [style.stroke]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--text-tertiary)'">
           <polygon points="5 3 19 12 5 21 5 3" />
         </svg>
         }
@@ -107,17 +109,17 @@
       <!-- Info -->
       <div class="flex-1 min-w-0">
         <p class="text-sm font-medium truncate leading-snug"
-           [style.color]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--text-primary)'">
+          [style.color]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--text-primary)'">
           {{ video.title }}
         </p>
 
         <!-- Progress bar (small) -->
         @if (getProgress(video) > 0 || video.is_completed) {
         <div class="mt-1.5 h-1 rounded-full overflow-hidden"
-             [style.background-color]="selectedVideo()?.slug === video.slug ? 'rgba(255,255,255,0.2)' : 'var(--outline)'">
+          [style.background-color]="selectedVideo()?.slug === video.slug ? 'rgba(255,255,255,0.2)' : 'var(--outline)'">
           <div class="h-full rounded-full transition-all duration-300"
-               [style.width.%]="video.is_completed ? 100 : getProgress(video)"
-               [style.background-color]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--primary)'">
+            [style.width.%]="video.is_completed ? 100 : getProgress(video)"
+            [style.background-color]="selectedVideo()?.slug === video.slug ? '#fff' : 'var(--primary)'">
           </div>
         </div>
         }
@@ -125,12 +127,12 @@
         <!-- Label -->
         @if (video.is_completed) {
         <span class="text-[11px] font-medium mt-0.5 block"
-              [style.color]="selectedVideo()?.slug === video.slug ? 'rgba(255,255,255,0.8)' : 'var(--primary)'">
+          [style.color]="selectedVideo()?.slug === video.slug ? 'rgba(255,255,255,0.8)' : 'var(--primary)'">
           ✓ Completed
         </span>
         } @else if (getProgress(video) > 0) {
         <span class="text-[11px] mt-0.5 block"
-              [style.color]="selectedVideo()?.slug === video.slug ? 'rgba(255,255,255,0.7)' : 'var(--text-tertiary)'">
+          [style.color]="selectedVideo()?.slug === video.slug ? 'rgba(255,255,255,0.7)' : 'var(--text-tertiary)'">
           {{ getProgress(video) }}% watched
         </span>
         }
@@ -147,7 +149,7 @@
     <!-- Player Header -->
     <div class="flex items-center gap-3">
       <div class="flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold flex-shrink-0"
-           style="background-color: var(--primary); color: var(--on-primary);">
+        style="background-color: var(--primary); color: var(--on-primary);">
         {{ v.order }}
       </div>
       <h2 class="text-base font-semibold leading-snug" style="color: var(--text-primary);">
@@ -158,9 +160,9 @@
     <!-- YouTube Player -->
     @if (getType(v) === 'youtube') {
     <div class="relative w-full rounded-2xl overflow-hidden" style="aspect-ratio: 16/9; background-color: #000;">
-      <iframe class="absolute inset-0 w-full h-full" [src]="getYoutubeEmbed(v.video_url)" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
+      <iframe class="absolute inset-0 w-full h-full" [src]="getYoutubeEmbed(v.video_url)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                 encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+      </iframe>
     </div>
     }
 
@@ -169,9 +171,9 @@
     <div class="relative w-full rounded-2xl overflow-hidden" style="aspect-ratio: 16/9; background-color: #000;">
       @if (videoErrors()[v.slug]) {
       <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6"
-           style="background-color: var(--surface);">
+        style="background-color: var(--surface);">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-             style="width: 40px; height: 40px; color: var(--error);">
+          style="width: 40px; height: 40px; color: var(--error);">
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.95 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
         </svg>
@@ -179,10 +181,9 @@
           <p class="text-sm font-semibold" style="color: var(--text-primary);">Playback error</p>
           <p class="text-xs mt-1" style="color: var(--text-tertiary);">{{ videoErrors()[v.slug] }}</p>
         </div>
-        <button class="btn-primary flex items-center gap-2 text-xs px-4 py-2 rounded-lg"
-                (click)="retryVideo(v.slug)">
+        <button class="btn-primary flex items-center gap-2 text-xs px-4 py-2 rounded-lg" (click)="retryVideo(v.slug)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               style="width: 14px; height: 14px;">
+            style="width: 14px; height: 14px;">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
           </svg>
@@ -190,11 +191,9 @@
         </button>
       </div>
       } @else {
-      <video class="absolute inset-0 w-full h-full" controls
-             [src]="v.video_upload!"
-             (timeupdate)="onTimeUpdate($event, v.slug)"
-             (ended)="onVideoEnded($event, v)"
-             (error)="onVideoError($event, v.slug)">
+      <video class="absolute inset-0 w-full h-full" controls [src]="v.video_upload!"
+        (timeupdate)="onTimeUpdate($event, v.slug)" (ended)="onVideoEnded($event, v)"
+        (error)="onVideoError($event, v.slug)">
       </video>
       }
     </div>
@@ -203,9 +202,9 @@
     <!-- No Source -->
     @if (getType(v) === 'none') {
     <div class="flex flex-col items-center justify-center gap-3 rounded-2xl"
-         style="aspect-ratio: 16/9; background-color: var(--surface); border: 1px dashed var(--outline);">
+      style="aspect-ratio: 16/9; background-color: var(--surface); border: 1px dashed var(--outline);">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-           style="width: 40px; height: 40px; color: var(--text-tertiary);">
+        style="width: 40px; height: 40px; color: var(--text-tertiary);">
         <path stroke-linecap="round" stroke-linejoin="round"
           d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
       </svg>
@@ -215,14 +214,12 @@
 
     <!-- ── Progress Bar ── -->
     @if (getProgress(v) > 0 || v.is_completed) {
-    <div class="px-4 py-3 rounded-xl border"
-         style="background-color: var(--surface); border-color: var(--outline);">
+    <div class="px-4 py-3 rounded-xl border" style="background-color: var(--surface); border-color: var(--outline);">
 
       <div class="flex justify-between items-center mb-2.5">
-        <span class="text-[11px] font-medium uppercase tracking-wider"
-              style="color: var(--text-tertiary);">Course Progress</span>
-        <span class="text-[13px] font-semibold tabular-nums"
-              style="color: var(--text-primary);">
+        <span class="text-[11px] font-medium uppercase tracking-wider" style="color: var(--text-tertiary);">Course
+          Progress</span>
+        <span class="text-[13px] font-semibold tabular-nums" style="color: var(--text-primary);">
           {{ v.is_completed ? '100' : getProgress(v) }}%
         </span>
       </div>
@@ -231,11 +228,9 @@
       <div class="relative h-1.5 rounded-full" style="background-color: var(--outline);">
         <!-- Fill -->
         <div class="absolute top-0 left-0 h-full rounded-full transition-all duration-500"
-             [style.width.%]="v.is_completed ? 100 : getProgress(v)"
-             style="background-color: var(--primary);">
+          [style.width.%]="v.is_completed ? 100 : getProgress(v)" style="background-color: var(--primary);">
           <!-- Dot ● -->
-          <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2"
-               style="right: -5px;
+          <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2" style="right: -5px;
                       background-color: var(--primary);
                       border-color: var(--surface);
                       box-shadow: 0 0 0 3px rgba(10, 92, 117, 0.25);">

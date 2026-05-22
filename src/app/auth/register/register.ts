@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -8,30 +8,36 @@ import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth';
 import { RouterLinkActive } from '@angular/router';
 
+function strictEmailValidator(control: AbstractControl): ValidationErrors | null {
+  const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  if (!control.value) return null;
+  return regex.test(control.value) ? null : { invalidEmail: true };
+}
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink,RouterLinkActive],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterLinkActive],
   templateUrl: './register.html',
 })
+
 export class Register {
   registerForm: FormGroup;
   showPassword = signal(false);
-  showConfirm  = signal(false);
-  loading      = signal(false);
+  showConfirm = signal(false);
+  loading = signal(false);
 
   constructor(
-    private fb:     FormBuilder,
-    private http:   HttpClient,
-    private auth:   AuthService,
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private auth: AuthService,
     private router: Router
   ) {
-   
+
     this.registerForm = this.fb.group({
-      first_name:      ['', Validators.required],
-      last_name:       ['', Validators.required],
-      email:           ['', [Validators.required, Validators.email]],
-      password:        ['', [Validators.required, Validators.minLength(8)]],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
     }, { validators: this.passwordsMatch });
   }
@@ -42,7 +48,7 @@ export class Register {
   }
 
   togglePassword() { this.showPassword.update(v => !v); }
-  toggleConfirm()  { this.showConfirm.update(v => !v); }
+  toggleConfirm() { this.showConfirm.update(v => !v); }
 
   onSubmit(): void {
     if (this.registerForm.invalid) {
@@ -52,7 +58,7 @@ export class Register {
     this.loading.set(true);
     const { confirmPassword, ...payload } = this.registerForm.value;
 
-   this.auth.register(payload).subscribe({
+    this.auth.register(payload).subscribe({
       next: () => {
         sessionStorage.setItem('verify_email', payload.email);
         this.loading.set(false);
