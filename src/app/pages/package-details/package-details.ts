@@ -8,12 +8,12 @@ import { AuthService } from '../../auth/services/auth';
 import { AlertService } from '../../shared/services/alert';
 import { IPackageDetails, IPackageCardData } from '../../user-features/models/course.model';
 import { ImgFallback } from '../../shared/directives/img-fallback';
-import { RouterLink } from '@angular/router';
 import { Skeleton } from '../../components/shared/skeleton/skeleton';
+
 @Component({
   selector: 'app-package-details',
   standalone: true,
-  imports: [CommonModule, ImgFallback, RouterLink, Skeleton],
+  imports: [CommonModule, ImgFallback, Skeleton],
   templateUrl: './package-details.html',
   styleUrl: './package-details.css',
 })
@@ -82,8 +82,6 @@ ngOnInit() {
 
     token$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: () => {
-
-
         const notEnrolled = this.packageData!.courses.filter(
           course => !course.is_enrolled
         );
@@ -131,7 +129,6 @@ ngOnInit() {
       return;
     }
 
-    // Navigate to course workspace
     this.router.navigate(['/CourseWorkspace/', courseSlug]);
   }
 }

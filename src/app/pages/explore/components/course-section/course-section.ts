@@ -6,13 +6,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Card } from '../../../../components/shared/card/card';
 import { CourseService } from '../../../../user-features/services/user';
 import { ICourseCardData, IPackageCardData } from '../../../../user-features/models/course.model';
-import { ImgFallback } from '../../../../shared/directives/img-fallback';
 import { Skeleton } from "../../../../components/shared/skeleton/skeleton";
 
 @Component({
   selector: 'app-course-section',
   standalone: true,
-  imports: [Card, RouterLink, CommonModule, ImgFallback, Skeleton],
+  imports: [Card, RouterLink, CommonModule, Skeleton],
   templateUrl: './course-section.html',
   styleUrl: './course-section.css',
 })
@@ -28,9 +27,9 @@ export class CourseSection implements OnInit {
   private tracksPageSize = 4;
   tracksTotalPages = 1;
 
- get hasMoreTracks(): boolean {
-  return this.tracksPage < this.tracksTotalPages;
-}
+  get hasMoreTracks(): boolean {
+    return this.tracksPage < this.tracksTotalPages;
+  }
 
   // ── Courses ──
   manyCourses:            ICourseCardData[] = [];
@@ -39,10 +38,9 @@ export class CourseSection implements OnInit {
   private coursesPageSize = 8;
   coursesTotalPages       = 1;
 
-get hasMoreCourses(): boolean {
-  return this.coursesPage < this.coursesTotalPages;
-}
-
+  get hasMoreCourses(): boolean {
+    return this.coursesPage < this.coursesTotalPages;
+  }
 
   ngOnInit() {
     this.loadTracks();
@@ -55,8 +53,8 @@ get hasMoreCourses(): boolean {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: ({ packages, totalPages }) => {
-        this.learningTracks     = [...this.learningTracks, ...packages];
-        this.tracksTotalPages   = totalPages;
+        this.learningTracks      = [...this.learningTracks, ...packages];
+        this.tracksTotalPages    = totalPages;
         this.isLoadingMoreTracks = false;
       },
       error: () => this.isLoadingMoreTracks = false,
@@ -76,16 +74,17 @@ get hasMoreCourses(): boolean {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: ({ courses, totalPages }) => {
-        this.manyCourses        = [...this.manyCourses, ...courses];
-        this.coursesTotalPages  = totalPages;
+        this.manyCourses          = [...this.manyCourses, ...courses];
+        this.coursesTotalPages    = totalPages;
         this.isLoadingMoreCourses = false;
       },
       error: () => this.isLoadingMoreCourses = false,
     });
   }
+
   onCourseClick(slug: string) {
-  this.router.navigate(['/course', slug]);
-}
+    this.router.navigate(['/course', slug]);
+  }
 
   loadMoreCourses() {
     if (!this.hasMoreCourses || this.isLoadingMoreCourses) return;
@@ -93,5 +92,4 @@ get hasMoreCourses(): boolean {
     this.isLoadingMoreCourses = true;
     this.loadCourses();
   }
-
 }
