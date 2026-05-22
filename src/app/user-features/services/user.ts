@@ -221,6 +221,17 @@ export class CourseService {
       .pipe(
         map((res) => {
           const data = res.data;
+          const courses = (data.courses || []).map((c) => ({
+            title:           c.title,
+            slug:            c.slug,
+            image:           c.image ?? null,
+            avg_rating:      c.avg_rating ?? 0,
+            ratings_count:   c.ratings_count ?? 0,
+            students_count:  c.students_count ?? 0,
+            is_enrolled:     c.is_enrolled ?? false,
+            instructor_name: c.instructor_name || 'Expert Instructor',
+          }));
+          
           return {
             title:           data.title,
             slug:            data.slug,
@@ -228,24 +239,15 @@ export class CourseService {
             price:           data.price ?? 0,
             courses_count:   data.courses_count,
             is_enrolled:     data.is_enrolled,
-            courses: (data.courses || []).map((c) => ({
-              title:           c.title,
-              slug:            c.slug,
-              image:           c.image ?? null,
-              avg_rating:      c.avg_rating ?? 0,
-              ratings_count:   c.ratings_count ?? 0,
-              students_count:  c.students_count ?? 0,
-              is_enrolled:     c.is_enrolled ?? false,
-              instructor_name: c.instructor_name || 'Expert Instructor',
-            })),
-            course_slugs: data.courses?.map((c) => c.slug) || [],
-
-         avg_rating: data.avg_rating ??
-  (data.courses?.length
-    ? data.courses.reduce((sum, c) => sum + (c.avg_rating ?? 0), 0) / data.courses.length
-    : 0),
-ratings_count: data.ratings_count ?? 0,
-} as IPackageDetails;
+            courses:         courses,
+            instructor_name: data.instructor_name || courses[0]?.instructor_name || 'Expert Instructor',
+            course_slugs:    data.courses?.map((c) => c.slug) || [],
+            avg_rating:      data.avg_rating ??
+              (data.courses?.length
+                ? data.courses.reduce((sum, c) => sum + (c.avg_rating ?? 0), 0) / data.courses.length
+                : 0),
+            ratings_count:   data.ratings_count ?? 0,
+          } as IPackageDetails;
         })
       );
   }

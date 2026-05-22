@@ -1,32 +1,50 @@
 @if (isLoading) {
-<div class="max-w-7xl mx-auto px-4 md:px-6 py-10">
-  <app-skeleton type="course-detail" />
-</div>
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-10">
+    <app-skeleton type="course-detail" />
+  </div>
 }
 
 @if (!isLoading && packageData) {
-<div class="max-w-7xl mx-auto px-4 md:px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-  <!-- Left Content -->
-  <div class="lg:col-span-2">
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-[var(--text-primary)] mb-2 tracking-tight">{{ packageData.title }}</h1>
-      <p class="text-[var(--text-secondary)] leading-relaxed max-w-3xl text-base">{{ packageData.description }}</p>
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Left Content -->
+    <div class="lg:col-span-2">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-[var(--text-primary)] mb-2 tracking-tight">
+          {{ packageData.title }}
+        </h1>
+        <p class="text-[var(--text-secondary)] leading-relaxed max-w-3xl text-base">
+          {{ packageData.description }}
+        </p>
 
-      <div class="flex flex-wrap items-center gap-4 mt-6">
-        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20 text-xs font-bold uppercase tracking-wider">
-          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-          {{ packageData.avg_rating | number: '1.1-1' }} Rating
-        </div>
-        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20 text-xs font-bold uppercase tracking-wider">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path d="M12 6.253v13m0-13C10.832 5.405 9.397 5 7.75 5 5.679 5 4 6.343 4 8v10c0-1.657 1.679-3 3.75-3 1.647 0 3.082.405 4.25 1.253m0-13 C13.168 5.405 14.603 5 16.25 5 18.321 5 20 6.343 20 8v10 c0-1.657-1.679-3-3.75-3 -1.647 0-3.082.405-4.25 1.253" />
-          </svg>
-          {{ packageData.courses_count }} Included Courses
+        <div class="flex flex-wrap items-center gap-4 mt-6">
+          <div
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20 text-xs font-bold uppercase tracking-wider"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+              />
+            </svg>
+            {{ packageData.avg_rating | number: '1.1-1' }} Rating
+          </div>
+          <div
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20 text-xs font-bold uppercase tracking-wider"
+          >
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 6.253v13m0-13C10.832 5.405 9.397 5 7.75 5 5.679 5 4 6.343 4 8v10c0-1.657 1.679-3 3.75-3 1.647 0 3.082.405 4.25 1.253m0-13 C13.168 5.405 14.603 5 16.25 5 18.321 5 20 6.343 20 8v10 c0-1.657-1.679-3-3.75-3 -1.647 0-3.082.405-4.25 1.253"
+              />
+            </svg>
+            {{ packageData.courses_count }} Included Courses
+          </div>
         </div>
       </div>
-    </div>
 
       <h2 class="font-title mb-6 text-[#102A33] text-2xl">Included Courses</h2>
 
@@ -36,7 +54,9 @@
             class="flex flex-col md:flex-row md:items-center justify-between p-5 md:p-6 border border-[var(--divider)] rounded-2xl bg-white shadow-sm hover:shadow-md hover:border-[#0A5C75] transition-all duration-300 gap-4 md:gap-0"
           >
             <div class="flex items-center gap-4 md:gap-6 flex-grow min-w-0">
-              <div class="w-24 md:w-28 h-16 md:h-20 bg-gray-900 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
+              <div
+                class="w-24 md:w-28 h-16 md:h-20 bg-gray-900 rounded-xl overflow-hidden flex-shrink-0 shadow-sm"
+              >
                 <img
                   appImgFallback
                   [src]="course.image"
@@ -61,12 +81,16 @@
               </div>
             </div>
 
-            <div class="flex items-center justify-between md:justify-end gap-5 md:ml-6 flex-shrink-0 border-t md:border-0 pt-4 md:pt-0 border-[var(--divider)]/50">
+            <div
+              class="flex items-center justify-between md:justify-end gap-5 md:ml-6 flex-shrink-0 border-t md:border-0 pt-4 md:pt-0 border-[var(--divider)]/50"
+            >
               <div class="flex flex-col items-end gap-1 text-right">
                 <div class="font-bold text-lg text-[#102A33] flex items-center gap-1">
                   {{ course.avg_rating | number: '1.1-1' }}
                   <svg class="w-3.5 h-3.5 fill-amber-500 text-amber-500" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    />
                   </svg>
                 </div>
                 <p class="text-xs text-[var(--text-tertiary)] font-medium">
@@ -85,81 +109,141 @@
       </div>
     </div>
 
-  <!-- Sticky Sidebar -->
-  <div class="lg:col-span-1">
-    <div class="bg-[var(--surface)] p-6 rounded-[28px] border border-[var(--outline)] sticky top-8 shadow-2xl shadow-[var(--primary)]/5 overflow-hidden">
-      <!-- Glow decoration -->
-      <div class="absolute -top-12 -right-12 w-32 h-32 bg-[var(--primary)]/5 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Sticky Sidebar -->
+    <div class="lg:col-span-1">
+      <div
+        class="bg-[var(--surface)] p-6 rounded-[28px] border border-[var(--outline)] sticky top-8 shadow-2xl shadow-[var(--primary)]/5 overflow-hidden"
+      >
+        <!-- Glow decoration -->
+        <div
+          class="absolute -top-12 -right-12 w-32 h-32 bg-[var(--primary)]/5 rounded-full blur-3xl pointer-events-none"
+        ></div>
 
-      <div class="relative">
-        <h3 class="text-lg font-bold text-[var(--text-primary)] mb-6 px-1">Bundle Summary</h3>
+        <div class="relative">
+          <h3 class="text-lg font-bold text-[var(--text-primary)] mb-6 px-1">Bundle Summary</h3>
 
-        <div class="flex items-center gap-3 mb-6 p-4 bg-[var(--background)]/50 rounded-2xl border border-[var(--outline)]/30">
-          <div class="w-11 h-11 bg-gradient-to-br from-[var(--primary)] to-cyan-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-500/10 font-bold">
-            {{ packageData.instructor_name?.charAt(0) || 'U' }}
+          <div
+            class="flex items-center gap-3 mb-6 p-4 bg-[var(--background)]/50 rounded-2xl border border-[var(--outline)]/30"
+          >
+            <div
+              class="w-11 h-11 bg-gradient-to-br from-[var(--primary)] to-cyan-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-500/10 font-bold"
+            >
+              {{ packageData.instructor_name?.charAt(0) || 'U' }}
+            </div>
+            <div class="min-w-0">
+              <p
+                class="text-[10px] text-[var(--text-tertiary)] uppercase font-bold tracking-widest mb-0.5 leading-none"
+              >
+                Instructor
+              </p>
+              <p class="font-bold text-[var(--text-primary)] text-sm truncate">
+                {{ packageData.instructor_name || 'Instructor' }}
+              </p>
+            </div>
           </div>
-          <div class="min-w-0">
-            <p class="text-[10px] text-[var(--text-tertiary)] uppercase font-bold tracking-widest mb-0.5 leading-none">Instructor</p>
-            <p class="font-bold text-[var(--text-primary)] text-sm truncate">
-              {{ packageData.instructor_name }}
+
+          <div class="grid grid-cols-2 gap-3 mb-8">
+            <div
+              class="p-4 bg-[var(--background)]/40 rounded-2xl border border-[var(--outline)]/20 text-center hover:bg-[var(--background)]/60 transition-colors"
+            >
+              <p
+                class="text-[10px] text-[var(--text-tertiary)] uppercase font-bold tracking-widest mb-1.5"
+              >
+                Courses
+              </p>
+              <p class="font-bold text-[var(--text-primary)] text-xl">
+                {{ packageData.courses_count }}
+              </p>
+            </div>
+            <div
+              class="p-4 bg-[var(--background)]/40 rounded-2xl border border-[var(--outline)]/20 text-center hover:bg-[var(--background)]/60 transition-colors"
+            >
+              <p
+                class="text-[10px] text-[var(--text-tertiary)] uppercase font-bold tracking-widest mb-1.5"
+              >
+                Rating
+              </p>
+              <p
+                class="font-bold text-[var(--text-primary)] text-xl flex items-center justify-center gap-1"
+              >
+                {{ packageData.avg_rating | number: '1.1-1' }}
+                <span class="text-amber-500 text-sm"
+                  ><svg class="w-3 h-3 fill-amber-500 text-amber-500" viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    /></svg
+                ></span>
+              </p>
+            </div>
+          </div>
+
+          <div class="mb-8 px-1">
+            <p
+              class="text-[10px] text-[var(--text-tertiary)] font-bold uppercase tracking-widest mb-2 leading-none"
+            >
+              Total Bundle Price
             </p>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-3xl font-bold text-[var(--text-primary)]">{{
+                packageData.price
+              }}</span>
+              <span class="text-sm font-bold text-[var(--text-tertiary)]">EGP</span>
+            </div>
           </div>
-        </div>
 
-        <div class="grid grid-cols-2 gap-3 mb-8">
-          <div class="p-4 bg-[var(--background)]/40 rounded-2xl border border-[var(--outline)]/20 text-center hover:bg-[var(--background)]/60 transition-colors">
-            <p class="text-[10px] text-[var(--text-tertiary)] uppercase font-bold tracking-widest mb-1.5">Courses</p>
-            <p class="font-bold text-[var(--text-primary)] text-xl">
-              {{ packageData.courses_count }}
-            </p>
+          <button
+            (click)="onBuyPackage()"
+            [disabled]="isBuying() || isBought()"
+            class="w-full font-bold py-4 rounded-2xl transition-all active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-[var(--primary)]/20"
+            [ngClass]="{
+              'bg-[var(--secondary)] text-[var(--on-secondary)] shadow-none cursor-default':
+                isBought(),
+              'bg-[var(--primary)] hover:opacity-90 text-white': !isBought(),
+            }"
+          >
+            @if (isBuying()) {
+              <span class="flex items-center justify-center gap-2 text-sm">
+                <span
+                  class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                ></span>
+                Processing...
+              </span>
+            } @else if (isBought()) {
+              <span class="flex items-center justify-center gap-2 text-sm">
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M5 13l4 4L19 7" />
+                </svg>
+                Already Purchased
+              </span>
+            } @else {
+              <span class="text-base">Get Instant Access</span>
+            }
+          </button>
+
+          <div
+            class="flex items-center justify-center gap-2 mt-6 text-[11px] text-[var(--text-tertiary)] font-medium"
+          >
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+            Secure checkout with SSL encryption
           </div>
-          <div class="p-4 bg-[var(--background)]/40 rounded-2xl border border-[var(--outline)]/20 text-center hover:bg-[var(--background)]/60 transition-colors">
-            <p class="text-[10px] text-[var(--text-tertiary)] uppercase font-bold tracking-widest mb-1.5">Rating</p>
-            <p class="font-bold text-[var(--text-primary)] text-xl flex items-center justify-center gap-1">
-              {{ packageData.avg_rating | number: '1.1-1' }}
-              <span class="text-amber-500 text-sm"><svg class="w-3 h-3 fill-amber-500 text-amber-500" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg></span>
-            </p>
-          </div>
-        </div>
-
-        <div class="mb-8 px-1">
-          <p class="text-[10px] text-[var(--text-tertiary)] font-bold uppercase tracking-widest mb-2 leading-none">Total Bundle Price</p>
-          <div class="flex items-baseline gap-1.5">
-            <span class="text-3xl font-bold text-[var(--text-primary)]">{{ packageData.price }}</span>
-            <span class="text-sm font-bold text-[var(--text-tertiary)]">EGP</span>
-          </div>
-        </div>
-
-        <button
-          (click)="onBuyPackage()"
-          [disabled]="isBuying() || isBought()"
-          class="w-full font-bold py-4 rounded-2xl transition-all active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-[var(--primary)]/20"
-          [ngClass]="{
-            'bg-[var(--secondary)] text-[var(--on-secondary)] shadow-none cursor-default': isBought(),
-            'bg-[var(--primary)] hover:opacity-90 text-white': !isBought(),
-          }"
-        >
-          @if (isBuying()) {
-            <span class="flex items-center justify-center gap-2 text-sm">
-              <span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-              Processing...
-            </span>
-          } @else if (isBought()) {
-             <span class="flex items-center justify-center gap-2 text-sm">
-               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-               Already Purchased
-             </span>
-          } @else {
-            <span class="text-base">Get Instant Access</span>
-          }
-        </button>
-
-        <div class="flex items-center justify-center gap-2 mt-6 text-[11px] text-[var(--text-tertiary)] font-medium">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-          Secure checkout with SSL encryption
         </div>
       </div>
     </div>
   </div>
-</div>
 }
