@@ -120,7 +120,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'materials',
+            redirectTo: 'videos',
             pathMatch: 'full'
           },
           {

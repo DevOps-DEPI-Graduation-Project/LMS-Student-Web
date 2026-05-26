@@ -1,22 +1,6 @@
 <div class="bg-[var(--surface)] border-b border-[var(--outline)] sticky top-0 z-10">
   <div class="flex px-6 gap-1">
 
-    <a routerLink="materials"
-       routerLinkActive="text-[var(--primary)] border-[var(--primary)]"
-       [routerLinkActiveOptions]="{ exact: false }"
-       class="flex items-center gap-2 px-4 py-3 text-sm font-semibold
-              border-b-2 border-transparent text-[var(--text-tertiary)]
-              hover:text-[var(--text-primary)] hover:bg-[var(--background)]
-              rounded-t-lg transition-all duration-150">
-      <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor"
-           stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586
-             a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-      </svg>
-      Materials
-    </a>
-
     <a routerLink="videos"
        routerLinkActive="text-[var(--primary)] border-[var(--primary)]"
        [routerLinkActiveOptions]="{ exact: false }"
@@ -31,6 +15,22 @@
              L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
       </svg>
       Videos
+    </a>
+
+    <a routerLink="materials"
+       routerLinkActive="text-[var(--primary)] border-[var(--primary)]"
+       [routerLinkActiveOptions]="{ exact: false }"
+       class="flex items-center gap-2 px-4 py-3 text-sm font-semibold
+              border-b-2 border-transparent text-[var(--text-tertiary)]
+              hover:text-[var(--text-primary)] hover:bg-[var(--background)]
+              rounded-t-lg transition-all duration-150">
+      <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor"
+           stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586
+             a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+      Materials
     </a>
 
     <a routerLink="quiz"

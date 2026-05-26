@@ -160,9 +160,7 @@
     <!-- YouTube Player -->
     @if (getType(v) === 'youtube') {
     <div class="relative w-full rounded-2xl overflow-hidden" style="aspect-ratio: 16/9; background-color: #000;">
-      <iframe class="absolute inset-0 w-full h-full" [src]="getYoutubeEmbed(v.video_url)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-                 encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-      </iframe>
+      <div [id]="'yt-player-' + v.slug" class="absolute inset-0 w-full h-full"></div>
     </div>
     }
 

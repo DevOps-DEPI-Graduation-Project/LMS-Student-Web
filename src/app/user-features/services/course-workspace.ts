@@ -74,9 +74,9 @@ export class CourseWorkspaceService {
     );
   }
 
-  markVideoComplete(videoSlug: string, watchedSeconds: number): Observable<any> {
+  markVideoComplete(videoSlug: string, currentTime: number): Observable<any> {
     return this.http.post(API_ENDPOINTS.videoComplete(videoSlug), {
-      watched_seconds: watchedSeconds
+      current_time: currentTime
     });
   }
 }

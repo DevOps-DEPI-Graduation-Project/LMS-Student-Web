@@ -76,7 +76,7 @@ export class TabVideos implements OnInit, OnDestroy {
     this.videoErrors.update(e => ({ ...e, [video.slug]: null }));
 
     if (this.getType(video) === 'youtube') {
-      this.markComplete(video);
+      setTimeout(() => this.initYouTubePlayer(video), 300);
     }
   }
 
@@ -127,12 +127,13 @@ export class TabVideos implements OnInit, OnDestroy {
 
     const video = this.videos().find(v => v.slug === slug);
     if (video && !video.is_completed && el.duration > 0 && el.currentTime > el.duration - 1) {
-      this.markComplete(video);
+      this.markComplete(video, Math.floor(el.currentTime));
     }
   }
 
   onVideoEnded(event: Event, video: Video) {
-    this.markComplete(video);
+    const el = event.target as HTMLVideoElement;
+    this.markComplete(video, Math.floor(el.currentTime));
   }
 
   onVideoError(event: Event, slug: string) {
@@ -153,16 +154,27 @@ export class TabVideos implements OnInit, OnDestroy {
   }
 
   // ── Mark Complete ───────────────────────────────────────────────────────────
-  markComplete(video: Video) {
+  markComplete(video: Video, currentTime: number = 9999999) {
     if (video.is_completed) return;
+    if (this.completing.has(video.slug)) return;
+    this.completing.add(video.slug);
 
-    this.videos.update(vs => vs.map(v =>
-      v.slug === video.slug ? { ...v, is_completed: true } : v
-    ));
-
-    if (this.selectedVideo()?.slug === video.slug) {
-      this.selectedVideo.update(v => v ? { ...v, is_completed: true } : null);
-    }
+    this.workspaceService.markVideoComplete(video.slug, currentTime).subscribe({
+      next: (res: IVideoCompleteResponse) => {
+        if (res?.data?.is_completed) {
+          this.videos.update(vs => vs.map(v =>
+            v.slug === video.slug ? { ...v, is_completed: true } : v
+          ));
+          if (this.selectedVideo()?.slug === video.slug) {
+            this.selectedVideo.update(v => v ? { ...v, is_completed: true } : null);
+          }
+        }
+        this.completing.delete(video.slug);
+      },
+      error: () => {
+        this.completing.delete(video.slug);
+      }
+    });
   }
 
   // ── YouTube IFrame Player API ───────────────────────────────────────────────
@@ -198,7 +210,8 @@ export class TabVideos implements OnInit, OnDestroy {
         events: {
           onStateChange: (event: any) => {
             if (event.data === YT.PlayerState.ENDED) {
-              this.markComplete(video);
+              const currentTime = Math.floor(this.ytPlayers[slug]?.getCurrentTime?.() ?? 9999999);
+              this.markComplete(video, currentTime);
             }
           }
         }
