@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../../../environments/environment';
@@ -14,7 +14,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './tab-materials.html',
   styleUrl: './tab-materials.css',
 })
-export class TabMaterials implements OnInit {
+export class TabMaterials implements OnInit, OnDestroy {
   private courseWorkspaceService = inject(CourseWorkspaceService);
   private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
@@ -54,6 +54,10 @@ export class TabMaterials implements OnInit {
     this.viewerOpen = false;
     this.selectedMaterial = null;
     this.safeFileUrl = null;
+    document.body.style.overflow = '';
+  }
+
+  ngOnDestroy() {
     document.body.style.overflow = '';
   }
 }
