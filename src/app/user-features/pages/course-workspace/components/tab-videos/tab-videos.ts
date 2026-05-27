@@ -25,7 +25,7 @@ export class TabVideos implements OnInit, OnDestroy {
   realDurations = signal<Record<string, number>>({});
   videoErrors = signal<Record<string, string | null>>({});
 
-  private ytPlayers: Record<string, any> = {};
+  private ytPlayer: any = null;
   private completing = new Set<string>();
 
   constructor(
@@ -63,10 +63,10 @@ export class TabVideos implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    for (const slug of Object.keys(this.ytPlayers)) {
-      try { this.ytPlayers[slug].destroy(); } catch { }
+    if (this.ytPlayer) {
+      try { this.ytPlayer.destroy(); } catch { }
     }
-    this.ytPlayers = {};
+    this.ytPlayer = null;
   }
 
   // ── Select Video ────────────────────────────────────────────────────────────
@@ -192,25 +192,31 @@ export class TabVideos implements OnInit, OnDestroy {
   }
 
   initYouTubePlayer(video: Video) {
-    const slug = video.slug;
     const videoId = this.extractYoutubeId(video.video_url);
     if (!videoId) return;
 
-    if (this.ytPlayers[slug]) {
-      try { this.ytPlayers[slug].destroy(); } catch { }
-      delete this.ytPlayers[slug];
+    if (this.ytPlayer) {
+      try { this.ytPlayer.destroy(); } catch { }
+      this.ytPlayer = null;
     }
 
     const createPlayer = () => {
-      const el = document.getElementById(`yt-player-${slug}`);
-      if (!el) return;
-      this.ytPlayers[slug] = new YT.Player(`yt-player-${slug}`, {
+      const container = document.getElementById('yt-player');
+      if (!container) return;
+
+      container.innerHTML = '';
+      const playerTarget = document.createElement('div');
+      container.appendChild(playerTarget);
+
+      this.ytPlayer = new YT.Player(playerTarget, {
+        width: '100%',
+        height: '100%',
         videoId,
         playerVars: { rel: 0, modestbranding: 1 },
         events: {
           onStateChange: (event: any) => {
             if (event.data === YT.PlayerState.ENDED) {
-              const currentTime = Math.floor(this.ytPlayers[slug]?.getCurrentTime?.() ?? 9999999);
+              const currentTime = Math.floor((this.ytPlayer?.getCurrentTime?.() ?? 9999999) + 100);
               this.markComplete(video, currentTime);
             }
           }
