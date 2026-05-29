@@ -3,7 +3,7 @@
   <div class="w-full max-w-5xl bg-[var(--surface)] rounded-3xl shadow-lg border border-[var(--outline)] overflow-hidden grid md:grid-cols-2">
 
     <!-- LEFT SIDE -->
-    <div class="p-8 flex flex-col items-center justify-center text-center bg-gradient-to-b from-green-50 to-transparent">
+    <div class="p-8 flex flex-col items-center justify-center text-center bg-gradient-to-b from-green-50/50 to-transparent dark:from-green-950/20">
 
       <p class="text-xs text-[var(--text-tertiary)] mb-2">
         RESULT SUMMARY
@@ -20,7 +20,7 @@
       <!-- Circle Score -->
       <div class="relative w-40 h-40 flex items-center justify-center mb-4">
 
-        <div class="absolute inset-0 rounded-full border-[10px] border-green-300"></div>
+        <div class="absolute inset-0 rounded-full border-[10px] border-green-200 dark:border-green-900/60"></div>
 
         <div class="text-center">
           <p class="text-3xl font-bold text-[var(--text-primary)]">
@@ -32,7 +32,7 @@
       </div>
 
       <!-- Badge -->
-      <div class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium mb-3">
+      <div class="bg-green-100/80 dark:bg-green-950/40 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-xs font-medium mb-3 border border-green-200/40 dark:border-green-900/30">
         {{ result?.status === 'passed' ? '✔ Passed' : '• Keep going!' }}
       </div>
 
@@ -59,7 +59,7 @@
       <div class="grid grid-cols-2 gap-4">
 
         <!-- This Attempt -->
-        <div class="bg-blue-50 rounded-2xl p-4">
+        <div class="bg-blue-50/60 dark:bg-blue-950/20 rounded-2xl p-4 border border-blue-100/50 dark:border-blue-900/20">
           <p class="text-xs text-[var(--text-tertiary)] mb-1">
             THIS ATTEMPT
           </p>
@@ -71,14 +71,14 @@
           </p>
         </div>
 
-        <div class="bg-green-50 rounded-2xl p-4">
+        <div class="bg-green-50/60 dark:bg-green-950/20 rounded-2xl p-4 border border-green-100/50 dark:border-green-900/20">
           <p class="text-xs text-[var(--text-tertiary)] mb-1">
             ATTEMPT NUMBER
           </p>
           <p class="text-xl font-bold text-[var(--text-primary)]">
             {{ result?.attempt_number ?? '-' }}
           </p>
-          <p class="text-xs text-green-600 mt-1">
+          <p class="text-xs text-green-600 dark:text-green-400 mt-1">
             {{ result?.attempt_date ?? 'No date available' }}
           </p>
         </div>
@@ -86,7 +86,7 @@
       </div>
 
       <!-- Tip -->
-      <div class="bg-[var(--primary)]/10 rounded-2xl p-4 text-sm text-[var(--text-secondary)]">
+      <div class="bg-[var(--primary)]/10 border border-[var(--primary)]/20 dark:bg-[var(--primary)]/5 rounded-2xl p-4 text-sm text-[var(--text-secondary)]">
         <span class="font-semibold text-[var(--primary)]">Study Tip:</span>
         Review the questions you missed and focus on weak areas to improve your next attempt.
       </div>
